@@ -243,7 +243,7 @@ class GACPD:
             for line in patch:
                 # Detect the start of a new hunk (lines starting with "@@")
                 if line.startswith('@@'):
-                    if hunk_count > 0:
+                    if hunk_count >= 0:
                         self.save_hunk_files(hunk_count, output_dir, deletions_file, del_count, f"deletions.{extension}")
                         self.save_hunk_files(hunk_count, output_dir, additions_file, add_count, f"additions.{extension}")
                     hunk_count += 1
@@ -481,7 +481,7 @@ class GACPD:
                                         self.parse_patch_file(f'src/{repo_files[len(repo_files) - 1]}', f'src', f'{extension}')
 
                                         classification = ""
-                                        tokens_jscpd = [40, 30, 20]
+                                        tokens_jscpd = [50, 40, 30]
                                         MO_total = 0
                                         ED_total = 0
                                         SP_total = 0
