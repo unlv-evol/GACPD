@@ -43,13 +43,13 @@ def create_git_folder(repo_name):
     if os.path.exists(repo_owner[0]+"/"+repo_owner[1]):
         os.chdir(repo_owner[0]+"/"+repo_owner[1])
     else:
-        os.mkdir(repo_owner[0]+"/"+repo_owner[1])
+        os.makedirs(repo_owner[0]+"/"+repo_owner[1])
         os.chdir(repo_owner[0]+"/"+repo_owner[1])
 
     command = [
         "git",
         "clone",
-        f"https://github.com/{repo_name}",
+        f"https://github.com/{repo_owner[1]+"/"+repo_owner[2]}",
     ]
 
     subprocess.run(command)
@@ -63,9 +63,10 @@ def remove_folder(folder_name):
         shutil.rmtree(folder_name)
 
 print("Apache/kafka Renames")
+
 remove_folder('gitclones/apache')
 create_git_folder("gitclones/apache/kafka")
-renames = obtain_git_rename_history("2022-06-02", "2022-12-18", "apache/kafka")
+renames = obtain_git_rename_history("2022-06-02", "2022-12-18", "gitclones/apache/kafka")
 
 for filename in renames:
     print(renames[filename])
@@ -73,7 +74,7 @@ for filename in renames:
 print("Linkedin/kafka Renames")
 remove_folder('gitclones/linkedin')
 create_git_folder("gitclones/linkedin/kafka")
-renames = obtain_git_rename_history("2022-06-02", "2022-12-18", "linkedin/kafka")
+renames = obtain_git_rename_history("2022-06-02", "2022-12-18", "gitclones/linkedin/kafka")
 
 for filename in renames:
     print(renames[filename])
