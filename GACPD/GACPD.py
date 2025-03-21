@@ -451,7 +451,8 @@ class GACPD:
                                                                                         self.repo_check_number, file,
                                                                                         new_file_dir, fileName,
                                                                                         self.token_list[self.ct])
-
+                                        destPath = os.path.normpath(destPath)
+                                        desPath = destPath.replace('\\', '/')
                                         self.ct += 1
 
                                         """
@@ -468,6 +469,10 @@ class GACPD:
                                         patch_lines = files[file][0]['patch']
                                         patchPath = self.repo_dir_files + self.repo_check_number + '/' + self.repo_main_line + '/' + str(
                                             pr_nr) + '/patches/' + new_file_dir
+
+                                        patchPath = os.path.normpath(patchPath)
+                                        patchPath = patchPath.replace('\\', '/')
+
                                         patchName = fileName.split('.')[0]
                                         patchPath, dup_count = classifier.save_patch(patchPath, patchName, patch_lines,
                                                                                      dup_count)
