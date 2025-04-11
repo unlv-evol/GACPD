@@ -1,6 +1,5 @@
 {
   "ignore": ["node_modules/", "dist/", ".jscpd.json", "package.json", "package-lock.json"],
-  "minTokens": 40,
   "minLines": 1,
   "reporters": ["html", "csv"],
   "skipLocal": true,
