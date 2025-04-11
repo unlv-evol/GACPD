@@ -374,11 +374,6 @@ class GACPD:
         self.ct, self.repo_data, req, runtime = dataloader.fetchPrData(self.repo_main_line, self.repo_divergent, self.prs,
                                                                        destination_sha, self.token_list, self.ct)
 
-    def fetch_pullrequest_data(self):
-        destination_sha, self.ct = dataloader.getDestinationSha(self.repo_divergent, self.cut_off_date, self.token_list, self.ct)
-        self.ct, self.repo_data, req, runtime = dataloader.fetch_pullrequest_data(self.repo_main_line, self.repo_divergent,
-                                                                                  self.prs, destination_sha,
-                                                                                  self.token_list, self.ct, self.cut_off_date)
     def classify(self):
         print(f'\nStarting classification for {self.repo_main_line}, - , {self.repo_divergent}...')
 
@@ -392,6 +387,8 @@ class GACPD:
                 try:
                     print(f'Currently Checking PR: {pr_nr}')
                     destination_sha = self.repo_data[pr_nr]['destination_sha']
+                    print(f"Created At: {self.repo_data[pr_nr]["created_at"]}")
+                    print(f"Merged At: {self.repo_data[pr_nr]["merged_at"]}")
 
                     self.results[pr_nr] = {}
 
@@ -446,13 +443,11 @@ class GACPD:
                                         if self.ct == 40:
                                             self.ct = 0
 
-                                        destPath, destUrl_ = classifier.getFileFromDest(self.repo_dir_files,
-                                                                                        self.repo_divergent, destination_sha,
-                                                                                        self.repo_check_number, file,
-                                                                                        new_file_dir, fileName,
-                                                                                        self.token_list[self.ct])
+                                        destPath = ("Results/Repos_files"+"/"+self.repo_check_number+
+                                                    '/' +self.repo_divergent + '/' + new_file_dir+'/'+fileName)
 
-                                        self.ct += 1
+                                        destPath = os.path.normpath(destPath)
+                                        destPath = destPath.replace('\\', '/')
 
                                         """
                                             Get the file after the patch from the variant1
@@ -460,14 +455,13 @@ class GACPD:
                                         if self.ct == 40:
                                             self.ct = 0
 
-                                        fileAfterPatchDir, fileAfterPatchUrlAdd_ = classifier.getFileAfterPatch(
-                                            self.repo_dir_files, self.repo_main_line, sha, self.repo_check_number, pr_nr, file,
-                                            new_file_dir, fileName, self.token_list[self.ct])
-                                        self.ct += 1
-
                                         patch_lines = files[file][0]['patch']
                                         patchPath = self.repo_dir_files + self.repo_check_number + '/' + self.repo_main_line + '/' + str(
                                             pr_nr) + '/patches/' + new_file_dir
+
+                                        patchPath = os.path.normpath(patchPath)
+                                        patchPath = patchPath.replace('\\', '/')
+
                                         patchName = fileName.split('.')[0]
                                         patchPath, dup_count = classifier.save_patch(patchPath, patchName, patch_lines,
                                                                                      dup_count)
@@ -491,12 +485,26 @@ class GACPD:
                                             ED_check = 0
                                             SP_check = 0
                                             NA_check = 0
+
+                                            jscpd_path = os.path.normpath(
+                                                os.path.join(os.getcwd(), 'node_modules', '.bin', 'jscpd.cmd'))
+                                            jscpd_path = jscpd_path.replace('\\', '/')
+
                                             test = subprocess.run(
-                                                ['jscpd', '--pattern', f'*.{extension}', '--min-tokens',
-                                                 f'{jscpdtoken}'])
+                                                [jscpd_path, '--pattern', f'*.{extension}', '--min-tokens',
+                                                 f'{jscpdtoken}'],
+                                                capture_output=True,
+                                                text=True
+                                            )
+
+                                            print("Return Code:", test.returncode)
+                                            print("STDOUT:", test.stdout)
+                                            print("STDERR:", test.stderr)
+
                                             file_check = open('reports/html/jscpd-report.json')
                                             data_check = json.load(file_check)
                                             file_check.close()
+
                                             format = self.file_extensions_swapped.get("." + extension)
                                             try:
                                                 for checks in data_check["statistics"]["formats"][format][
@@ -545,9 +553,6 @@ class GACPD:
                                         result_mod = {}
                                         result_mod['type'] = status.upper()
                                         result_mod['destPath'] = destPath
-                                        result_mod['destUrl'] = destUrl_
-                                        result_mod['fileAfterPatchUrl'] = fileAfterPatchUrlAdd_
-                                        result_mod['fileBeforePatchUrl'] = ''
                                         result_mod['patchPath'] = patchPath
                                         result_mod['patchClass'] = classification
 
@@ -566,6 +571,10 @@ class GACPD:
                                     exc_type, exc_obj, exc_tb = sys.exc_info()
                                     fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
                                     print(exc_type, fname, exc_tb.tb_lineno)
+
+                                    self.remove_all_files('src')
+                                    self.remove_all_files('cmp')
+                                    self.remove_all_files('reports')
                             else:
                                 result_mod = {}
                                 self.results[pr_nr][file]['results'] = list()
@@ -597,9 +606,53 @@ class GACPD:
             self.main_dir_results + self.repo_check_number + '_' + self.repo_main_line.split('/')[0] + '_' + self.repo_main_line.split('/')[
                 1] + '_results', [self.results, self.pr_classifications, all_counts, duration])
 
+    def remove_git_folder(self, folder):
+        folder_name = folder.replace("\\", "/")
+
+        if os.path.exists(folder_name):
+            shutil.rmtree(folder_name)
+
+    def create_git_folder(self, folder, repo_name):
+        repo_name = repo_name.replace("\\", "/")
+        repo_owner = repo_name.split("/")
+
+        og_path = os.getcwd()
+        if os.path.exists(folder+"/"+repo_owner[0] + "/" + repo_owner[1]):
+            os.chdir(folder+"/"+repo_owner[0] + "/" + repo_owner[1])
+        else:
+            os.makedirs(folder+"/"+repo_owner[0] + "/" + repo_owner[1])
+            os.chdir(folder+"/"+repo_owner[0] + "/" + repo_owner[1])
+
+        command = [
+            "git",
+            "clone",
+            f"https://github.com/{repo_owner[1] + "/" + repo_owner[2]}",
+        ]
+
+        subprocess.run(command)
+
+        os.chdir(og_path)
+
     def runClassification(self, prs_source):
         self.set_prs(prs_source)
         self.fetchPrData()
+        repo_name = self.repo_main_line.split('/')[0]
+        self.remove_git_folder("Results/Repos_files"+"/"+self.repo_check_number+"/"+repo_name)
+        file = self.repo_check_number+"/"+self.repo_divergent
+        self.create_git_folder("Results/Repos_files", file)
+        # command = [
+        #     "chmod",
+        #     "-R",
+        #     "u+rw",
+        #     f"Results/Repos_files/{self.repo_check_number}/{repo_name}"
+        # ]
+        command = [
+            "icacls",
+            f"Results\\Repos_files\\{self.repo_check_number}\\{repo_name}",
+            "/grant",
+            f"Everyone:(F)"
+        ]
+        subprocess.run(command)
         print('======================================================================')
         self.classify()
         self.createDf()

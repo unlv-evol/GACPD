@@ -165,5 +165,12 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-ManualCheck/
+Reports/
+src/
+cmp/
+reports/
 node_modules/
+ManualCheck/cmp/
+ManualCheck/src/
+ManualCheck/reports/
+ManualCheck/gitclones/

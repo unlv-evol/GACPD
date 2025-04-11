@@ -72,7 +72,8 @@ class PatchLoader(object):
         removed_lines = []
         
         for line in patch_lines:
-            diff_file = re.sub('\.patch$', '', patch_path)
+            patch_path = os.path.normpath(patch_path)
+            diff_file = re.sub(r'\.patch$', '', patch_path)
             magic_ext = self._get_file_type(diff_file)
             if line.startswith('@@'):     
                 if diff_buggy_lines:
@@ -170,7 +171,8 @@ class PatchLoader(object):
         added_lines = []
         
         for line in patch_lines:
-            diff_file = re.sub('\.patch$', '', patch_path)
+            patch_path = os.path.normpath(patch_path)
+            diff_file = re.sub(r'\.patch$', '', patch_path)
             magic_ext = self._get_file_type(diff_file)
             if line.startswith('@@'):
                 if diff_patch_lines:

@@ -184,7 +184,7 @@ def start_manual_automatic_check(folder):
             print()
 
 # Example usage
-file1_path = '../GACPD-50-40-30-new.csv'
+file1_path = '../ManualCheck/GACPD-50-40-30-new.csv'
 file2_path = '../ManualCheck/test-3.csv'
 file3_path = 'differences-50-40-30-new.csv'
 output_dir = 'Checks'
