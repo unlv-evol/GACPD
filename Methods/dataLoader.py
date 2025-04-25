@@ -55,6 +55,8 @@ def fetchPrData(source, destination, prs, destination_sha, token_list, ct):
             pr_data[k]['destination_sha'] = destination_sha
             pr_data[k]['created_at'] = pr['created_at']
             pr_data[k]['merged_at'] = pr['merged_at']
+            pr_data[k]['base_sha_added'] = pr['base']['sha']
+            pr_data[k]['head_sha_added'] = pr['head']['sha']
             
             for i in commits:
                 if ct == lenTokens:

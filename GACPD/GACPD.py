@@ -25,6 +25,7 @@ class GACPD:
         self.results = {}
         self.main_dir_results = 'Results/Repos_results/'
         self.repo_dir_files = 'Results/Repos_files/'
+        self.repo_clones = 'Results/Repos_clones/'
         self.pr_classifications = {}
         self.prs = []
         self.file_extensions_swapped = {
@@ -165,6 +166,8 @@ class GACPD:
             ".yml": "yml",
         }
         self.pareco_extensions = ["c", "java", "python", "bash", "prolog", "php", "ruby"]
+        self.renames = {}
+        self.cycles = []
 
     def set_prs(self, prs):
         for pr in prs:
@@ -173,6 +176,7 @@ class GACPD:
     def get_dates(self):
         self.fork_date, self.divergence_date, self.cut_off_date, self.ahead_by, self.behind_by, self.ct = divergence_date(
             self.repo_main_line, self.repo_divergent, self.token_list, self.token_count, self.cut_off_date, self.divergence_date)
+        self.modern_day = self.cut_off_date
         print(
             f'The divergence_date of the repository {self.repo_divergent} is {self.divergence_date} and the cut_off_date is {self.cut_off_date}.')
         print(f'The variant2 is ==>')
@@ -374,8 +378,59 @@ class GACPD:
         self.ct, self.repo_data, req, runtime = dataloader.fetchPrData(self.repo_main_line, self.repo_divergent, self.prs,
                                                                        destination_sha, self.token_list, self.ct)
 
+    def get_added_git_files(self, mainline, baseSha, prnum):
+        try:
+            og_path = os.getcwd()
+            os.chdir(mainline)
+            command = ["git", "fetch", "origin", f"pull/{prnum}/head"]
+            subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+            command = ['git', 'diff', '--name-status', baseSha, 'FETCH_HEAD']
+
+            result = subprocess.run(command, stdout=subprocess.PIPE, text=True)
+            added_files = []
+            renamed_files = {}
+
+            for line in result.stdout.strip().split('\n'):
+                if line.startswith('R'):
+                    parts = line.strip().split('\t')
+                    if len(parts) == 3:
+                        renamed_files[parts[1]] = parts[2]
+
+                if line.startswith('A'):
+                    parts = line.strip().split('\t')
+                    if len(parts) == 2:
+                        added_files.append(parts[1])  # file path
+            os.chdir(og_path)
+        except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+            print(exc_type, fname, exc_tb.tb_lineno)
+            return []
+
+        return added_files, renamed_files
+
+    def trace_back_to_origin(self, file, renames):
+        reverse_map = {v: k for k, v in renames.items()}
+        while file in reverse_map:
+            file = reverse_map[file]
+        return file
+
+    def trace_forward_to_latest(self, file, renames):
+        while file in renames:
+            file = renames[file]
+        return file
+
+    def get_rename_path(self, filename, mainline, divergent):
+        origin = self.trace_back_to_origin(filename, mainline)
+
+        latest = self.trace_forward_to_latest(origin, divergent)
+
+        return origin, latest
+
     def classify(self):
         print(f'\nStarting classification for {self.repo_main_line}, - , {self.repo_divergent}...')
+        fileDebug = open("outputDebug.txt", "w")
 
         start = time.time()
         outputMO = 0
@@ -385,17 +440,27 @@ class GACPD:
         for pr_nr in self.repo_data:
             if int(pr_nr) >= 0:
                 try:
-                    print(f'Currently Checking PR: {pr_nr}')
-                    destination_sha = self.repo_data[pr_nr]['destination_sha']
-                    print(f"Created At: {self.repo_data[pr_nr]["created_at"]}")
-                    print(f"Merged At: {self.repo_data[pr_nr]["merged_at"]}")
+                    print(f'==================================================', file=fileDebug)
+                    print(f'Currently Checking PR: {pr_nr}', file=fileDebug)
+                    print(f"Created At: {self.repo_data[pr_nr]["created_at"]}", file=fileDebug)
+                    print(f"Merged At: {self.repo_data[pr_nr]["merged_at"]}", file=fileDebug)
+                    print(f"Base Sha: {self.repo_data[pr_nr]["base_sha_added"]}", file=fileDebug)
+                    print(f'==================================================', file=fileDebug)
 
                     self.results[pr_nr] = {}
-
+                    mainCheck = self.repo_clones + self.repo_check_number + "/" + self.repo_main_line
+                    currentAddedFiles, current_renames = self.get_added_git_files(mainCheck, str(self.repo_data[pr_nr]["base_sha_added"]),
+                                                                 str(pr_nr))
+                    reverse_map = {v: k for k, v in current_renames.items()}
+                    print(f'Current Added: {currentAddedFiles}', file=fileDebug)
+                    print(f'Current Renames: {current_renames}', file=fileDebug)
                     dup_count = 1
 
                     for files in self.repo_data[pr_nr]['commits_data']:
                         for file in files:
+                            '''
+                                THe next few if statements check if the file is a valid file that GACPD can check
+                            '''
                             self.results[pr_nr][file] = {}
                             if file.find(".") < 0:
                                 result_mod = {}
@@ -413,25 +478,22 @@ class GACPD:
                                 self.results[pr_nr][file]['result'] = result_mod
                                 continue
 
+                            '''
+                                If it is a valid file then we now check
+                            '''
                             if len(files[file]) != 0:
                                 try:
                                     if file_ext != "unknown":
-                                        parent = ''
-                                        sha = ''
                                         fileName = ''
                                         fileDir = ''
 
                                         if len(files[file]) == 1:
-                                            parent = files[file][0]['parent_sha']
-                                            sha = files[file][0]['commit_sha']
                                             fileName = commitloader.fileName(file)
                                             fileDir = commitloader.fileDir(file)
                                             status = files[file][0]['status']
                                         else:
                                             first_commit, last_commit = classifier.getFirstLastCommit(
                                                 self.repo_data[pr_nr]['commits_data'])
-                                            parent = first_commit['parent_sha']
-                                            sha = last_commit['commit_sha']
                                             fileName = commitloader.fileName(file)
                                             fileDir = commitloader.fileDir(file)
                                             status = first_commit['status']
@@ -445,6 +507,8 @@ class GACPD:
 
                                         destPath = ("Results/Repos_files"+"/"+self.repo_check_number+
                                                     '/' +self.repo_divergent + '/' + new_file_dir+'/'+fileName)
+
+                                        divergent_fileNameForRenamesOrAdditions = new_file_dir+fileName
 
                                         destPath = os.path.normpath(destPath)
                                         destPath = destPath.replace('\\', '/')
@@ -465,12 +529,66 @@ class GACPD:
                                         patchName = fileName.split('.')[0]
                                         patchPath, dup_count = classifier.save_patch(patchPath, patchName, patch_lines,
                                                                                      dup_count)
+                                        '''
+                                            Now check if the file exists - if it doesn't then check for the renames
+                                            If its not a renamed file then immediatly check
+                                        '''
 
                                         shutil.copy(destPath, 'cmp/')
                                         shutil.copy(patchPath, 'src/')
-
                                         repo_files = patchPath.split('/')
                                         extension = destPath.split('.')[1]
+
+                                        mainline_fileNameForRenamesOrAdditions = divergent_fileNameForRenamesOrAdditions.split('.')[0] + "." + extension
+
+                                        print(f"Patch Path: {patchPath}", file=fileDebug)
+                                        print(f"Dest Path: {destPath}", file=fileDebug)
+                                        print(f"File of Linkedin to check: {divergent_fileNameForRenamesOrAdditions}", file=fileDebug)
+                                        print(f"File of Apache to check: {mainline_fileNameForRenamesOrAdditions}", file=fileDebug)
+
+                                        # Ignores files added in current PR
+                                        if mainline_fileNameForRenamesOrAdditions in currentAddedFiles:
+                                            result_mod = {}
+                                            result_mod['type'] = status.upper()
+                                            result_mod['destPath'] = destPath
+                                            result_mod['patchPath'] = patchPath
+                                            result_mod['patchClass'] = 'NA'
+                                            continue
+
+                                        if divergent_fileNameForRenamesOrAdditions != mainline_fileNameForRenamesOrAdditions:
+                                            currentCheck = divergent_fileNameForRenamesOrAdditions
+
+                                            cycleFound = False
+                                            for cycle in self.cycles:
+                                                if currentCheck in cycle:
+                                                    cycleFound = True
+                                                    currentCheck = cycle[0]
+
+                                            # if cycleFound is False:
+                                            #     while currentCheck in self.renames:
+                                            #         currentCheck = self.renames[currentCheck]
+                                            #         renameFound = True
+
+                                            # If a cycle has been found do something else
+                                            if cycleFound is True:
+                                                destPath = ("Results/Repos_files" + "/" + self.repo_check_number +
+                                                            '/' + self.repo_divergent + '/' + currentCheck)
+                                                print(f"**************************************************", file=fileDebug)
+                                                print(f"Renamed Divergent Path is: {destPath}", file=fileDebug)
+                                                print(f"**************************************************", file=fileDebug)
+                                            elif mainline_fileNameForRenamesOrAdditions in reverse_map:
+                                                originalName, currentDivergentName = self.get_rename_path(reverse_map[mainline_fileNameForRenamesOrAdditions],
+                                                                                                          self.renames_mainline,
+                                                                                                          self.renames)
+                                                if originalName != currentDivergentName:
+                                                    destPath = ("Results/Repos_files" + "/" + self.repo_check_number +
+                                                        '/' + self.repo_divergent + '/' + currentDivergentName)
+
+                                                    print(f"**************************************************",
+                                                          file=fileDebug)
+                                                    print(f"Renamed Divergent Path is: {destPath}", file=fileDebug)
+                                                    print(f"**************************************************",
+                                                          file=fileDebug)
 
                                         self.parse_patch_file(f'src/{repo_files[len(repo_files) - 1]}', f'src', f'{extension}')
 
@@ -479,15 +597,13 @@ class GACPD:
                                         MO_total = 0
                                         ED_total = 0
                                         SP_total = 0
-                                        NA_total = 0
                                         for jscpdtoken in tokens_jscpd:
                                             MO_check = 0
                                             ED_check = 0
-                                            SP_check = 0
                                             NA_check = 0
 
                                             jscpd_path = os.path.normpath(
-                                                os.path.join(os.getcwd(), 'node_modules', '.bin', 'jscpd.cmd'))
+                                                os.path.join(os.getcwd(), 'node_modules', '.bin', 'jscpd'))
                                             jscpd_path = jscpd_path.replace('\\', '/')
 
                                             test = subprocess.run(
@@ -496,10 +612,6 @@ class GACPD:
                                                 capture_output=True,
                                                 text=True
                                             )
-
-                                            print("Return Code:", test.returncode)
-                                            print("STDOUT:", test.stdout)
-                                            print("STDERR:", test.stderr)
 
                                             file_check = open('reports/html/jscpd-report.json')
                                             data_check = json.load(file_check)
@@ -584,12 +696,6 @@ class GACPD:
                                 else:
                                     result_mod['patchClass'] = 'NOT EXISTING'
                                     self.results[pr_nr][file]['result'] = result_mod
-                            # patch_lines = classifier.unified_diff(fileBeforePatchDir, emptyFilePath)
-                            # patchPath = self.repo_dir_files + self.repo_file + '/' + self.variant1 + '/' + str(
-                            #     pr_nr) + '/' + sha + '/patches/' + new_file_dir
-                            # patchName = fileName.split('.')[0]
-                            # patchPath, dup_count = classifier.save_patch(patchPath, patchName,
-                            #                                              patch_lines, dup_count)
                     pass
                 except Exception as e:
                     exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -633,26 +739,94 @@ class GACPD:
 
         os.chdir(og_path)
 
+    def obtain_git_rename_history(self, start_date, end_date, repo_path):
+        og_path = os.getcwd()
+        os.chdir(repo_path)
+
+        # Git command to give us the oldest renames first, and then the latests
+        # This ensures the dictionary will contain the most recent renames in its value
+        command = [
+            "git",
+            "log",
+            "--diff-filter=R",
+            "--name-status",
+            "--pretty=format:",
+            f"--since={start_date}",
+            f"--until={end_date}",
+            "--reverse"
+        ]
+
+        results = subprocess.run(command, stdout=subprocess.PIPE, text=True)
+        rename_history = {}
+        for line in results.stdout.strip().split('\n'):
+            parts = line.split('\t')
+            if len(parts) == 3 and parts[0].startswith("R"):
+                old_name = parts[1]
+                new_name = parts[2]
+
+                rename_history[old_name] = new_name
+
+
+        os.chdir(og_path)
+
+        return rename_history
+
+    def find_cycle_from_file(self, start, renames, visited):
+        path = []
+        local_visited = {}
+
+        current = start
+        while current in renames:
+            if current in local_visited:
+                # Cycle detected
+                cycle_start_idx = local_visited[current]
+                cycle = path[cycle_start_idx:] + [current]
+                return cycle
+            if current in visited:
+                return None
+            local_visited[current] = len(path)
+            path.append(current)
+            current = renames[current]
+        return None
+
+    def find_rename_cyles(self, renames):
+        visited = set()
+        cycles = []
+
+        for file in renames:
+            if file not in visited:
+                cycle = self.find_cycle_from_file(file, renames, visited)
+                if cycle:
+                    cycles.append(cycle)
+                    visited.update(cycle)
+
+        return cycles
+
+    def obtain_git_information(self):
+        repo_name = "Results/Repos_files"+"/"+self.repo_check_number+"/"+self.repo_divergent
+        self.renames = self.obtain_git_rename_history("2018-08-31T21:32:03Z", self.modern_day, repo_name)
+        repo_name = "Results/Repos_clones" + "/" + self.repo_check_number + "/" + self.repo_main_line
+        self.renames_mainline = self.obtain_git_rename_history("2018-08-31T21:32:03Z", self.modern_day, repo_name)
+        self.cycles = self.find_rename_cyles(self.renames)
+
     def runClassification(self, prs_source):
         self.set_prs(prs_source)
         self.fetchPrData()
-        repo_name = self.repo_main_line.split('/')[0]
-        self.remove_git_folder("Results/Repos_files"+"/"+self.repo_check_number+"/"+repo_name)
-        file = self.repo_check_number+"/"+self.repo_divergent
-        self.create_git_folder("Results/Repos_files", file)
-        # command = [
-        #     "chmod",
-        #     "-R",
-        #     "u+rw",
-        #     f"Results/Repos_files/{self.repo_check_number}/{repo_name}"
-        # ]
-        command = [
-            "icacls",
-            f"Results\\Repos_files\\{self.repo_check_number}\\{repo_name}",
-            "/grant",
-            f"Everyone:(F)"
-        ]
-        subprocess.run(command)
+
+        # # Removes old git clone (if it exists) to ensure we have latest version
+        # repo_name = self.repo_divergent.split('/')[0]
+        # self.remove_git_folder("Results/Repos_files"+"/"+self.repo_check_number+"/"+repo_name)
+        # repo_name = self.repo_main_line.split('/')[0]
+        # self.remove_git_folder(self.repo_clones + "/" + self.repo_check_number + "/" + repo_name)
+        #
+        # # clones latest version of repo to ensure we have latest version
+        # file = self.repo_check_number+"/"+self.repo_divergent
+        # self.create_git_folder("Results/Repos_files", file)
+        #
+        # file = self.repo_check_number + "/" + self.repo_main_line
+        # self.create_git_folder(self.repo_clones, file)
+
+        self.obtain_git_information()
         print('======================================================================')
         self.classify()
         self.createDf()
