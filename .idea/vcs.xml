@@ -5,6 +5,16 @@
     <mapping directory="$PROJECT_DIR$/ManualCheck/gitclones/apache/kafka" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/ManualCheck/gitclones/linkedin/kafka" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Results/Repos_clones/1/apache/kafka" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/2/apache/kafka" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/3/apache/kafka" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/5/apache/kafka" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/6/apache/kafka" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/7/apache/kafka" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Results/Repos_files/1/linkedin/kafka" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_files/2/linkedin/kafka" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_files/3/linkedin/kafka" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_files/5/linkedin/kafka" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_files/6/linkedin/kafka" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_files/7/linkedin/kafka" vcs="Git" />
   </component>
 </project>

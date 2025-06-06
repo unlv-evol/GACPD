@@ -1,0 +1,51 @@
+,Mainline,Fork,Pr nr,Filename,Operation,File classification,Interesting
+0,apache/kafka,linkedin/kafka,12268,core/src/main/scala/kafka/server/KafkaConfig.scala,None,NA,0
+1,apache/kafka,linkedin/kafka,12262,core/src/test/scala/unit/kafka/server/LogOffsetTest.scala,MODIFIED,MO,1
+2,apache/kafka,linkedin/kafka,12259,clients/src/main/java/org/apache/kafka/clients/consumer/internals/ConsumerCoordinator.java,None,NA,0
+3,apache/kafka,linkedin/kafka,12259,clients/src/test/java/org/apache/kafka/clients/consumer/KafkaConsumerTest.java,None,NA,0
+4,apache/kafka,linkedin/kafka,12259,clients/src/test/java/org/apache/kafka/clients/consumer/internals/ConsumerCoordinatorTest.java,None,NA,0
+6,apache/kafka,linkedin/kafka,12253,clients/src/main/java/org/apache/kafka/common/record/MemoryRecordsBuilder.java,MODIFIED,MO,1
+5,apache/kafka,linkedin/kafka,12253,clients/src/main/java/org/apache/kafka/common/record/LazyDownConversionRecordsSend.java,None,NA,0
+7,apache/kafka,linkedin/kafka,12252,docs/quickstart.html,None,NA,0
+8,apache/kafka,linkedin/kafka,12251,docs/streams/tutorial.html,MODIFIED,MO,1
+15,apache/kafka,linkedin/kafka,12244,core/src/main/scala/kafka/server/AbstractFetcherManager.scala,MODIFIED,MO,1
+16,apache/kafka,linkedin/kafka,12244,core/src/main/scala/kafka/server/AbstractFetcherThread.scala,MODIFIED,MO,1
+23,apache/kafka,linkedin/kafka,12244,core/src/main/scala/kafka/server/ReplicaAlterLogDirsThread.scala,MODIFIED,MO,1
+24,apache/kafka,linkedin/kafka,12244,core/src/main/scala/kafka/server/ReplicaFetcherManager.scala,MODIFIED,MO,1
+25,apache/kafka,linkedin/kafka,12244,core/src/main/scala/kafka/server/ReplicaFetcherThread.scala,MODIFIED,MO,1
+28,apache/kafka,linkedin/kafka,12244,core/src/test/scala/unit/kafka/server/ReplicaAlterLogDirsThreadTest.scala,MODIFIED,MO,1
+29,apache/kafka,linkedin/kafka,12244,core/src/test/scala/unit/kafka/server/ReplicaFetcherThreadTest.scala,MODIFIED,MO,1
+31,apache/kafka,linkedin/kafka,12244,core/src/test/scala/unit/kafka/server/epoch/LeaderEpochIntegrationTest.scala,MODIFIED,MO,1
+33,apache/kafka,linkedin/kafka,12244,jmh-benchmarks/src/main/java/org/apache/kafka/jmh/fetcher/ReplicaFetcherThreadBenchmark.java,MODIFIED,MO,1
+34,apache/kafka,linkedin/kafka,12244,tests/kafkatest/tests/client/client_compatibility_features_test.py,MODIFIED,MO,1
+35,apache/kafka,linkedin/kafka,12244,tests/kafkatest/tests/client/client_compatibility_produce_consume_test.py,MODIFIED,MO,1
+36,apache/kafka,linkedin/kafka,12244,tests/kafkatest/tests/core/compatibility_test_new_broker_test.py,MODIFIED,MO,1
+37,apache/kafka,linkedin/kafka,12244,tests/kafkatest/tests/core/downgrade_test.py,MODIFIED,MO,1
+38,apache/kafka,linkedin/kafka,12244,tests/kafkatest/tests/core/security_rolling_upgrade_test.py,MODIFIED,MO,1
+39,apache/kafka,linkedin/kafka,12244,tests/kafkatest/tests/core/upgrade_test.py,MODIFIED,MO,1
+40,apache/kafka,linkedin/kafka,12244,tests/kafkatest/tests/core/zookeeper_security_upgrade_test.py,MODIFIED,MO,1
+42,apache/kafka,linkedin/kafka,12244,clients/src/test/java/org/apache/kafka/common/network/NetworkTestUtils.java,MODIFIED,ED,1
+44,apache/kafka,linkedin/kafka,12244,clients/src/test/java/org/apache/kafka/common/network/SslSelectorTest.java,MODIFIED,MO,1
+47,apache/kafka,linkedin/kafka,12244,docs/quickstart.html,MODIFIED,MO,1
+48,apache/kafka,linkedin/kafka,12244,docs/streams/tutorial.html,MODIFIED,MO,1
+9,apache/kafka,linkedin/kafka,12244,clients/src/main/java/org/apache/kafka/clients/consumer/internals/ConsumerCoordinator.java,None,NA,0
+10,apache/kafka,linkedin/kafka,12244,clients/src/test/java/org/apache/kafka/clients/consumer/internals/ConsumerCoordinatorTest.java,None,NA,0
+11,apache/kafka,linkedin/kafka,12244,clients/src/test/java/org/apache/kafka/clients/consumer/KafkaConsumerTest.java,None,NA,0
+12,apache/kafka,linkedin/kafka,12244,checkstyle/suppressions.xml,None,NA,0
+13,apache/kafka,linkedin/kafka,12244,config/server.properties,None,NA,0
+14,apache/kafka,linkedin/kafka,12244,core/src/main/scala/kafka/controller/KafkaController.scala,None,NA,0
+17,apache/kafka,linkedin/kafka,12244,core/src/main/scala/kafka/server/BrokerBlockingSender.scala,None,NOT EXISTING,0
+18,apache/kafka,linkedin/kafka,12244,core/src/main/scala/kafka/server/KafkaConfig.scala,None,NA,0
+19,apache/kafka,linkedin/kafka,12244,core/src/main/scala/kafka/server/LeaderEndPoint.scala,None,NOT EXISTING,0
+20,apache/kafka,linkedin/kafka,12244,core/src/main/scala/kafka/server/LocalLeaderEndPoint.scala,None,NOT EXISTING,0
+21,apache/kafka,linkedin/kafka,12244,core/src/main/scala/kafka/server/RemoteLeaderEndPoint.scala,None,NOT EXISTING,0
+22,apache/kafka,linkedin/kafka,12244,core/src/main/scala/kafka/server/ReplicaAlterLogDirsManager.scala,None,NA,0
+26,apache/kafka,linkedin/kafka,12244,core/src/test/scala/unit/kafka/server/AbstractFetcherManagerTest.scala,None,NOT EXISTING,0
+27,apache/kafka,linkedin/kafka,12244,core/src/test/scala/unit/kafka/server/AbstractFetcherThreadTest.scala,None,NA,0
+30,apache/kafka,linkedin/kafka,12244,core/src/test/scala/unit/kafka/server/ReplicaManagerTest.scala,None,NA,0
+32,apache/kafka,linkedin/kafka,12244,core/src/test/scala/unit/kafka/server/epoch/util/MockBlockingSender.scala,None,NOT EXISTING,0
+41,apache/kafka,linkedin/kafka,12244,tests/setup.py,None,NA,0
+43,apache/kafka,linkedin/kafka,12244,clients/src/test/java/org/apache/kafka/common/network/SelectorTest.java,None,NA,0
+45,apache/kafka,linkedin/kafka,12244,clients/src/test/java/org/apache/kafka/common/network/Tls12SelectorTest.java,None,NOT EXISTING,0
+46,apache/kafka,linkedin/kafka,12244,clients/src/test/java/org/apache/kafka/common/network/Tls13SelectorTest.java,None,NOT EXISTING,0
+49,apache/kafka,linkedin/kafka,12243,core/src/main/scala/kafka/controller/KafkaController.scala,None,NA,0

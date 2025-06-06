@@ -7,7 +7,7 @@ import subprocess
 import matplotlib.pyplot as plt
 import time
 import Methods.totals as totals
-import Methods.analysis as analysis
+from collections import defaultdict
 import Methods.analysis as analysis
 import Methods.classifier as classifier
 import Methods.dataLoader as dataloader
@@ -31,27 +31,41 @@ class GACPD:
         self.file_extensions_swapped = {
             ".abap": "abap",
             ".as": "actionscript",
-            ".ada": "ada",
-            ".conf": "nginx",
+            ".adb": "ada",
+            ".ads": "ada",
             ".apl": "apl",
             ".applescript": "applescript",
             ".ino": "arduino",
+            ".pde": "processing",
             ".arff": "arff",
             ".adoc": "asciidoc",
+            ".asciidoc": "asciidoc",
             ".asm": "nasm",
-            ".asp": "aspnet",
+            ".s": "asm6502",
+            ".aspx": "aspnet",
+            ".ascx": "aspnet",
             ".ahk": "autohotkey",
             ".au3": "autoit",
             ".sh": "bash",
+            ".bash": "bash",
             ".bas": "basic",
-            ".bat": "batch",
+            ".cmd": "batch",
             ".y": "bison",
+            ".b": "brainfuck",
             ".bf": "brainfuck",
             ".bro": "bro",
             ".c": "c",
+            ".h": "c-header",
             ".clj": "clojure",
+            ".cljs": "clojure",
+            ".cljc": "clojure",
             ".coffee": "coffeescript",
             ".cpp": "cpp",
+            ".cc": "cpp",
+            ".cxx": "cpp",
+            ".hpp": "cpp-header",
+            ".hxx": "cpp-header",
+            ".hh": "cpp-header",
             ".cr": "crystal",
             ".cs": "csharp",
             ".csp": "csp",
@@ -59,111 +73,160 @@ class GACPD:
             ".d": "d",
             ".dart": "dart",
             ".diff": "diff",
+            ".patch": "diff",
             "Dockerfile": "docker",
+            ".dockerfile": "docker",
             ".e": "eiffel",
+            ".ev": "eiffel",
             ".ex": "elixir",
+            ".exs": "elixir",
+            ".elm": "elm",
             ".erb": "erb",
             ".erl": "erlang",
+            ".hrl": "erlang",
+            ".f": "fortran",
+            ".for": "fortran",
             ".f90": "fortran",
+            ".f95": "fortran",
             ".fs": "fsharp",
+            ".fsi": "fsharp",
+            ".fsx": "fsharp",
             ".ged": "gedcom",
             ".feature": "gherkin",
-            ".git": "git",
             ".glsl": "glsl",
+            ".vert": "glsl",
+            ".frag": "glsl",
             ".go": "go",
             ".graphql": "graphql",
+            ".gql": "graphql",
             ".groovy": "groovy",
+            ".gvy": "groovy",
             ".haml": "haml",
             ".hbs": "handlebars",
+            ".handlebars": "handlebars",
             ".hs": "haskell",
             ".hx": "haxe",
-            ".hpkp": "hpkp",
-            ".hsts": "hsts",
-            ".html": "html",
             ".http": "http",
-            ".ijs": "j",
-            ".icon": "icon",
-            ".ni": "inform7",
+            ".icn": "icon",
             ".ini": "ini",
+            ".cfg": "ini",
             ".io": "io",
-            ".ipynb": "ipynb",
+            ".ijs": "j",
             ".java": "java",
             ".js": "javascript",
+            ".mjs": "javascript",
             ".ol": "jolie",
+            ".iol": "jolie",
             ".json": "json",
             ".jsx": "jsx",
             ".jl": "julia",
-            ".kmn": "keyman",
+            ".keymap": "keymap",
             ".kt": "kotlin",
+            ".kts": "kotlin",
             ".tex": "latex",
+            ".sty": "latex",
+            ".cls": "latex",
             ".less": "less",
             ".liquid": "liquid",
             ".lisp": "lisp",
+            ".lsp": "lisp",
+            ".cl": "lisp",
             ".ls": "livescript",
             ".lol": "lolcode",
             ".lua": "lua",
             "Makefile": "makefile",
+            ".mk": "makefile",
             ".md": "markdown",
+            ".markdown": "markdown",
+            ".html": "markup",
             ".xml": "markup",
-            ".m": "matlab",
+            ".xhtml": "markup",
+            ".m": "objectivec",
             ".mel": "mel",
             ".miz": "mizar",
             ".monkey": "monkey",
             ".n4js": "n4js",
+            ".nasm": "nasm",
             ".nim": "nim",
+            ".nims": "nim",
             ".nix": "nix",
             ".nsi": "nsis",
+            ".nsh": "nsis",
+            ".mm": "objectivec",
             ".ml": "ocaml",
+            ".mli": "ocaml",
             ".cl": "opencl",
             ".oz": "oz",
             ".gp": "parigp",
-            ".parser": "parser",
             ".pas": "pascal",
-            ".pl": "prolog",
+            ".pl": "perl",
+            ".pm": "perl",
             ".php": "php",
-            ".sql": "plsql",
+            ".phtml": "php",
+            ".pls": "plsql",
+            ".plsql": "plsql",
             ".ps1": "powershell",
+            ".psm1": "powershell",
             ".pde": "processing",
+            ".pro": "prolog",
             ".properties": "properties",
             ".proto": "protobuf",
             ".pug": "pug",
+            ".jade": "pug",
             ".pp": "puppet",
             ".pure": "pure",
             ".py": "python",
+            ".pyw": "python",
             ".q": "q",
+            ".r": "r",
+            ".R": "r",
             ".re": "reason",
             ".rpy": "renpy",
             ".rest": "rest",
+            ".rst": "rest",
             ".rip": "rip",
             ".graph": "roboconf",
+            ".instances": "roboconf",
             ".rb": "ruby",
             ".rs": "rust",
             ".sas": "sas",
             ".sass": "sass",
             ".scala": "scala",
             ".scm": "scheme",
+            ".ss": "scheme",
             ".scss": "scss",
             ".st": "smalltalk",
             ".tpl": "smarty",
             ".soy": "soy",
+            ".sql": "sql",
             ".styl": "stylus",
             ".swift": "swift",
+            ".tap": "tap",
             ".tcl": "tcl",
             ".textile": "textile",
             ".tsx": "tsx",
+            ".tt2": "tt2",
             ".twig": "twig",
             ".ts": "typescript",
-            ".vb": "visual_basic",
+            ".vb": "visual-basic",
             ".vm": "velocity",
             ".v": "verilog",
+            ".vh": "verilog",
             ".vhdl": "vhdl",
+            ".vhd": "vhdl",
             ".vim": "vim",
+            ".wat": "wasm",
             ".wasm": "wasm",
             ".wiki": "wiki",
+            ".mediawiki": "wiki",
             ".xeora": "xeora",
-            ".xojo": "xojo",
+            ".xeoracube": "xeora",
+            ".xojo_code": "xojo",
+            ".xojo_window": "xojo",
+            ".xq": "xquery",
+            ".xquery": "xquery",
             ".yaml": "yaml",
-            ".yml": "yml",
+            ".yml": "yaml"
         }
         self.pareco_extensions = ["c", "java", "python", "bash", "prolog", "php", "ruby"]
         self.renames = {}
@@ -343,6 +406,10 @@ class GACPD:
 
         for pr in self.pr_classifications:
             class_ = self.pr_classifications[pr]['class']
+            if os.path.isdir(f"Results/Repos_results/{self.repo_check_number}/{pr}_{class_}") is True:
+                shutil.rmtree(f"Results/Repos_results/{self.repo_check_number}/{pr}_{class_}")
+
+            os.rename(f"Results/Repos_results/{self.repo_check_number}/{pr}", f"Results/Repos_results/{self.repo_check_number}/{pr}_{class_}")
             if class_ == 'ED':
                 total_ED += 1
             elif class_ == 'MO':
@@ -437,9 +504,19 @@ class GACPD:
         outputED = 0
         outputSP = 0
         outputNA = 0
+        if os.path.isdir(f"Results/Repos_results/{self.repo_check_number}") is False:
+            os.makedirs(f"Results/Repos_results/{self.repo_check_number}")
+
         for pr_nr in self.repo_data:
             if int(pr_nr) >= 0:
                 try:
+                    # Create directory to save into
+                    if os.path.isdir(f"Results/Repos_results/{self.repo_check_number}/{pr_nr}") is False:
+                        os.makedirs(f"Results/Repos_results/{self.repo_check_number}/{pr_nr}")
+                    else:
+                        shutil.rmtree(f"Results/Repos_results/{self.repo_check_number}/{pr_nr}")
+                        os.makedirs(f"Results/Repos_results/{self.repo_check_number}/{pr_nr}")
+
                     print(f'==================================================', file=fileDebug)
                     print(f'Currently Checking PR: {pr_nr}', file=fileDebug)
                     print(f"Created At: {self.repo_data[pr_nr]["created_at"]}", file=fileDebug)
@@ -447,20 +524,39 @@ class GACPD:
                     print(f"Base Sha: {self.repo_data[pr_nr]["base_sha_added"]}", file=fileDebug)
                     print(f'==================================================', file=fileDebug)
 
+                    pr_data_user = open(f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/pr_results.txt", "w")
+                    print(f"Classified PR: {pr_nr}", file = pr_data_user)
+                    print(f"PR Title: {self.repo_data[pr_nr]['title']}", file = pr_data_user)
+                    print(f"PR Description: {self.repo_data[pr_nr]['body']}", file=pr_data_user)
+                    print(f"PR Location: {self.repo_data[pr_nr]['html_url']}", file = pr_data_user)
+                    print(f"", file = pr_data_user)
+
                     self.results[pr_nr] = {}
                     mainCheck = self.repo_clones + self.repo_check_number + "/" + self.repo_main_line
                     currentAddedFiles, current_renames = self.get_added_git_files(mainCheck, str(self.repo_data[pr_nr]["base_sha_added"]),
                                                                  str(pr_nr))
+                    # 18050
                     reverse_map = {v: k for k, v in current_renames.items()}
                     print(f'Current Added: {currentAddedFiles}', file=fileDebug)
                     print(f'Current Renames: {current_renames}', file=fileDebug)
-                    dup_count = 1
+                    print(f"Added Files in the PR (Skipped)", file=pr_data_user)
+                    for addedFiles in currentAddedFiles:
+                        print(f"  - {addedFiles}", file=pr_data_user)
+                    print(f"Renamed Files in PR:", file=pr_data_user)
+                    for key, value in current_renames.items():
+                        print(f"  - {key} -> {value}", file=pr_data_user)
 
+                    dup_count = 1
+                    checkPercetage = {}
                     for files in self.repo_data[pr_nr]['commits_data']:
                         for file in files:
+                            localCheckPercetage = []
                             '''
                                 THe next few if statements check if the file is a valid file that GACPD can check
                             '''
+                            if os.path.isdir(f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}") is False:
+                                os.makedirs(f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}")
+
                             self.results[pr_nr][file] = {}
                             if file.find(".") < 0:
                                 result_mod = {}
@@ -470,12 +566,18 @@ class GACPD:
                                 continue
 
                             file_ext = self.file_extensions_swapped.get("."+file.split('.')[1], "unknown")
-
-                            if file_ext not in self.pareco_extensions:
+                            if file_ext == "unknown":
                                 result_mod = {}
                                 self.results[pr_nr][file]['results'] = list()
                                 result_mod['patchClass'] = 'OTHER EXT'
                                 self.results[pr_nr][file]['result'] = result_mod
+
+                                shutil.copytree(
+                                    f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}",
+                                    f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/CC_EXT/{file.replace("/", "_").replace(".", "_")}")
+
+                                shutil.rmtree(
+                                    f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}")
                                 continue
 
                             '''
@@ -537,7 +639,14 @@ class GACPD:
                                         shutil.copy(destPath, 'cmp/')
                                         shutil.copy(patchPath, 'src/')
                                         repo_files = patchPath.split('/')
-                                        extension = destPath.split('.')[1]
+
+                                        extensionCheck = destPath.split('.')
+                                        extension = "java"
+
+                                        if(len(extensionCheck) >2):
+                                            extension = extensionCheck[len(extensionCheck)-1]
+                                        else:
+                                            extension = extensionCheck[1]
 
                                         mainline_fileNameForRenamesOrAdditions = divergent_fileNameForRenamesOrAdditions.split('.')[0] + "." + extension
 
@@ -546,13 +655,25 @@ class GACPD:
                                         print(f"File of Linkedin to check: {divergent_fileNameForRenamesOrAdditions}", file=fileDebug)
                                         print(f"File of Apache to check: {mainline_fileNameForRenamesOrAdditions}", file=fileDebug)
 
+                                        renamedDestPath = False
                                         # Ignores files added in current PR
                                         if mainline_fileNameForRenamesOrAdditions in currentAddedFiles:
                                             result_mod = {}
                                             result_mod['type'] = status.upper()
-                                            result_mod['destPath'] = destPath
+                                            result_mod['destPath'] = ''
                                             result_mod['patchPath'] = patchPath
                                             result_mod['patchClass'] = 'NA'
+
+                                            try:
+                                                shutil.copytree(
+                                                    f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}",
+                                                    f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/NA_ADDED/{file.replace("/", "_").replace(".", "_")}")
+
+                                                shutil.rmtree(
+                                                    f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}")
+                                            except Exception as e2:
+                                                pass
+
                                             continue
 
                                         if divergent_fileNameForRenamesOrAdditions != mainline_fileNameForRenamesOrAdditions:
@@ -563,11 +684,7 @@ class GACPD:
                                                 if currentCheck in cycle:
                                                     cycleFound = True
                                                     currentCheck = cycle[0]
-
-                                            # if cycleFound is False:
-                                            #     while currentCheck in self.renames:
-                                            #         currentCheck = self.renames[currentCheck]
-                                            #         renameFound = True
+                                                    renamedDestPath = True
 
                                             # If a cycle has been found do something else
                                             if cycleFound is True:
@@ -589,11 +706,12 @@ class GACPD:
                                                     print(f"Renamed Divergent Path is: {destPath}", file=fileDebug)
                                                     print(f"**************************************************",
                                                           file=fileDebug)
+                                                    renamedDestPath = True
 
                                         self.parse_patch_file(f'src/{repo_files[len(repo_files) - 1]}', f'src', f'{extension}')
 
                                         classification = ""
-                                        tokens_jscpd = [50, 40, 30]
+                                        tokens_jscpd = [30]
                                         MO_total = 0
                                         ED_total = 0
                                         SP_total = 0
@@ -625,12 +743,18 @@ class GACPD:
                                                         MO_check += \
                                                             data_check["statistics"]["formats"][format]["sources"][
                                                                 checks]["duplicatedTokens"]
+                                                        percentage = data_check["statistics"]["formats"][format]["sources"][
+                                                                checks]["percentage"]
+                                                        localCheckPercetage.append(f"{checks} ({jscpdtoken}) - has a similarity of: {percentage}%\n")
                                                     if "additions" in checks:
                                                         ED_check += \
                                                             data_check["statistics"]["formats"][format]["sources"][
                                                                 checks]["duplicatedTokens"]
+                                                        percentage = data_check["statistics"]["formats"][format]["sources"][
+                                                                checks]["percentage"]
+                                                        localCheckPercetage.append(f"{checks} ({jscpdtoken}) - has a similarity of: {percentage}%\n")
                                             except Exception as e:
-                                                pass
+                                                print("HERE - 2")
 
                                             if MO_check == 0 and ED_check == 0:
                                                 NA_check += 1
@@ -645,20 +769,37 @@ class GACPD:
                                                 ED_total += 1
                                                 break
 
+                                        shutil.copytree('src', f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}/src",
+                                                        dirs_exist_ok=True)
+                                        shutil.copytree('cmp', f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}/cmp",
+                                                        dirs_exist_ok=True)
+                                        shutil.copytree('reports', f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}/reports",
+                                                        dirs_exist_ok=True)
+
                                         self.remove_all_files('src')
                                         self.remove_all_files('cmp')
                                         self.remove_all_files('reports')
 
+                                        # if MO_total == 0 and ED_total == 0 and SP_total == 0:
+                                        #     classification = "NA"
+                                        #     outputNA += 1
+                                        # elif (SP_total > MO_total and SP_total > ED_total) or (MO_total == ED_total):
+                                        #     classification = "SP"
+                                        #     outputSP += 1
+                                        # elif MO_total > ED_total:
+                                        #     classification = "MO"
+                                        #     outputMO += 1
+                                        # elif ED_total > MO_total:
+                                        #     classification = "ED"
+                                        #     outputED += 1
+
                                         if MO_total == 0 and ED_total == 0 and SP_total == 0:
                                             classification = "NA"
                                             outputNA += 1
-                                        elif (SP_total > MO_total and SP_total > ED_total) or (MO_total == ED_total):
-                                            classification = "SP"
-                                            outputSP += 1
-                                        elif MO_total > ED_total:
+                                        elif MO_total != 0:
                                             classification = "MO"
                                             outputMO += 1
-                                        elif ED_total > MO_total:
+                                        else:
                                             classification = "ED"
                                             outputED += 1
 
@@ -668,6 +809,33 @@ class GACPD:
                                         result_mod['patchPath'] = patchPath
                                         result_mod['patchClass'] = classification
 
+                                        with open(f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}/results.txt", 'w') as f:
+                                            f.write(f"In PR: {pr_nr}\n")
+                                            f.write(f"Mainline is: {self.repo_main_line}\n")
+                                            f.write(f"Divergent Repo is: {self.repo_divergent}\n")
+                                            f.write(f"File: {file}\n")
+                                            if renamedDestPath is True:
+                                                f.write(f"Renamed Divergent Path is: {destPath}\n")
+                                            else:
+                                                f.write(f"Is called in Divergent Path is: {destPath}\n")
+                                            f.write(f"Similarity Check:\n")
+                                            for check in localCheckPercetage:
+                                                f.write(check)
+
+                                            f.write("Classification: \n")
+                                            f.write(f"The final classification is: {classification}\n")
+
+                                        print(f"Similarity analysis for:  {file}", file=pr_data_user)
+                                        print(f"  - Overall Classification is: {classification}", file=pr_data_user)
+                                        print(f"Hunk Similarity", file=pr_data_user)
+                                        for check in localCheckPercetage:
+                                            print(f"  - {check}", file=pr_data_user)
+                                        print(f"", file=pr_data_user)
+
+                                        shutil.copytree(f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}",
+                                                        f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{classification}/{file.replace("/", "_").replace(".", "_")}")
+
+                                        shutil.rmtree(f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}")
                                         self.results[pr_nr][file]['result'] = result_mod
 
                                     else:
@@ -675,14 +843,25 @@ class GACPD:
                                         result_mod['patchClass'] = 'OTHER EXT'
                                         self.results[pr_nr][file]['result'] = result_mod
                                 except Exception as e:
-                                    result_mod = {}
-                                    result_mod['patchClass'] = 'ERROR'
-                                    self.results[pr_nr][file]['result'] = result_mod
                                     print('Exception thrown is: ', e)
                                     print('File: ', file)
                                     exc_type, exc_obj, exc_tb = sys.exc_info()
                                     fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
                                     print(exc_type, fname, exc_tb.tb_lineno)
+
+                                    result_mod = {}
+                                    result_mod['patchClass'] = 'ERROR'
+                                    self.results[pr_nr][file]['result'] = result_mod
+
+                                    try:
+                                        shutil.copytree(
+                                            f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}",
+                                            f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/ERROR/{file.replace("/", "_").replace(".", "_")}")
+
+                                        shutil.rmtree(
+                                            f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}")
+                                    except Exception as e2:
+                                        pass
 
                                     self.remove_all_files('src')
                                     self.remove_all_files('cmp')
@@ -690,13 +869,32 @@ class GACPD:
                             else:
                                 result_mod = {}
                                 self.results[pr_nr][file]['results'] = list()
-                                if file_ext not in self.pareco_extensions:
+                                if file_ext == "unknown":
                                     result_mod['patchClass'] = 'OTHER EXT'
                                     self.results[pr_nr][file]['result'] = result_mod
+                                    try:
+                                        shutil.copytree(
+                                            f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}",
+                                            f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/CC_EXT/{file.replace("/", "_").replace(".", "_")}")
+
+                                        shutil.rmtree(
+                                            f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}")
+                                    except Exception as e2:
+                                        pass
                                 else:
                                     result_mod['patchClass'] = 'NOT EXISTING'
                                     self.results[pr_nr][file]['result'] = result_mod
-                    pass
+                                    try:
+                                        shutil.copytree(
+                                            f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}",
+                                            f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/NE/{file.replace("/", "_").replace(".", "_")}")
+
+                                        shutil.rmtree(
+                                            f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}")
+                                    except Exception as e2:
+                                        pass
+
+                    print(f"Recommendations: TBO", file=pr_data_user)
                 except Exception as e:
                     exc_type, exc_obj, exc_tb = sys.exc_info()
                     fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
@@ -814,17 +1012,17 @@ class GACPD:
         self.fetchPrData()
 
         # # Removes old git clone (if it exists) to ensure we have latest version
-        # repo_name = self.repo_divergent.split('/')[0]
-        # self.remove_git_folder("Results/Repos_files"+"/"+self.repo_check_number+"/"+repo_name)
-        # repo_name = self.repo_main_line.split('/')[0]
-        # self.remove_git_folder(self.repo_clones + "/" + self.repo_check_number + "/" + repo_name)
+        repo_name = self.repo_divergent.split('/')[0]
+        self.remove_git_folder("Results/Repos_files"+"/"+self.repo_check_number+"/"+repo_name)
+        repo_name = self.repo_main_line.split('/')[0]
+        self.remove_git_folder(self.repo_clones + "/" + self.repo_check_number + "/" + repo_name)
         #
         # # clones latest version of repo to ensure we have latest version
-        # file = self.repo_check_number+"/"+self.repo_divergent
-        # self.create_git_folder("Results/Repos_files", file)
-        #
-        # file = self.repo_check_number + "/" + self.repo_main_line
-        # self.create_git_folder(self.repo_clones, file)
+        file = self.repo_check_number+"/"+self.repo_divergent
+        self.create_git_folder("Results/Repos_files", file)
+
+        file = self.repo_check_number + "/" + self.repo_main_line
+        self.create_git_folder(self.repo_clones, file)
 
         self.obtain_git_information()
         print('======================================================================')
@@ -832,15 +1030,6 @@ class GACPD:
         self.createDf()
         print('======================================================================')
         self.visualizeResults()
-
-    def dfPatches(self, nr_patches=-1):
-        if nr_patches == -1:
-            return self.df_patches
-        else:
-            if nr_patches > self.df_patches.shape[0]:
-                print(
-                    f'The dataframe contain only {self.df_patches.shape[0]} rows. Printing only {self.df_patches.shape[0]} rows.')
-            return self.df_patches.head(nr_patches)
 
     def dfPatches(self, nr_patches=-1):
         if nr_patches == -1:
@@ -868,3 +1057,335 @@ class GACPD:
                 print(
                     f'The dataframe contain only {self.df_patch_classes.shape[0]} rows. Printing only {self.df_patch_classes.shape[0]} rows.')
             return self.df_patch_classes.head(nr_patches)
+
+    def create_dynamic_js(self, output_path="dynamic_boxes.js", target_dir="Results/Repos_results"):
+        data = {}
+
+        for folder in os.listdir(target_dir):
+            folder_path = os.path.join(target_dir, folder)
+            if not os.path.isdir(folder_path): continue
+
+            class_map = defaultdict(dict)
+            for sub in os.listdir(folder_path):
+                sub_path = os.path.join(folder_path, sub)
+                if os.path.isdir(sub_path) and "_" in sub:
+                    prefix, classification = sub.rsplit("_", 1)
+                    pr_info = {
+                        "path": f"{folder}/{sub}",
+                        "subfolders": [],
+                        "has_summary": os.path.exists(os.path.join(sub_path, "pr_results.txt"))
+                    }
+
+                    for child in os.listdir(sub_path):
+                        full = os.path.join(sub_path, child)
+                        if os.path.isdir(full):
+                            sub_subs = [gchild for gchild in os.listdir(full) if
+                                        os.path.isdir(os.path.join(full, gchild))]
+                            pr_info["subfolders"].append({
+                                "name": child,
+                                "subfolders": sub_subs
+                            })
+
+                    class_map[classification].setdefault("prs", {})[prefix] = pr_info
+
+            data[folder] = {k: v for k, v in class_map.items()}
+
+        js_data = json.dumps(data)
+        base_dir = target_dir.replace("\\", "/")
+
+        with open(output_path, "w") as f:
+            f.write(f"""
+        document.addEventListener("DOMContentLoaded", function () {{
+            const data = {js_data};
+            const baseDir = "{base_dir}";
+
+            const body = document.body;
+            const container = document.createElement("div");
+            const backButton = document.createElement("button");
+
+            body.style.margin = "0";
+            body.style.fontFamily = "Arial, sans-serif";
+            container.style.padding = "20px";
+            container.style.paddingTop = "80px";
+            body.appendChild(container);
+
+            backButton.textContent = "<- Back";
+            Object.assign(backButton.style, {{
+                position: "absolute",
+                top: "20px",
+                left: "20px",
+                padding: "10px 15px",
+                fontSize: "16px",
+                cursor: "pointer",
+                display: "none"
+            }});
+            body.appendChild(backButton);
+
+            let navStack = [];
+
+            function goBack() {{
+                if (navStack.length > 0) {{
+                    const last = navStack.pop();
+                    last();
+                }}
+                if (navStack.length === 0) backButton.style.display = "none";
+            }}
+            backButton.onclick = goBack;
+
+            function setCenteredLayout() {{
+                container.style.display = "flex";
+                container.style.flexWrap = "wrap";
+                container.style.justifyContent = "center";
+                container.style.alignItems = "center";
+            }}
+
+            function setListLayout() {{
+                container.style.display = "block";
+                container.style.maxWidth = "800px";
+                container.style.margin = "auto";
+            }}
+
+            function boxStyle() {{
+                return {{
+                    width: "200px",
+                    height: "120px",
+                    backgroundColor: "#fff",
+                    border: "1px solid #ddd",
+                    borderRadius: "10px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontWeight: "600",
+                    fontSize: "16px",
+                    margin: "10px",
+                    cursor: "pointer",
+                    boxShadow: "0 2px 6px rgba(0,0,0,0.05)"
+                }};
+            }}
+
+            function buttonStyle() {{
+                return {{
+                    padding: "12px 24px",
+                    fontSize: "16px",
+                    margin: "10px",
+                    backgroundColor: "#2563eb",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "8px",
+                    cursor: "pointer",
+                    boxShadow: "0 2px 4px rgba(0,0,0,0.1)"
+                }};
+            }}
+
+            function renderPage1_RepoButtons() {{
+                container.innerHTML = "";
+                setCenteredLayout();
+                Object.keys(data).forEach(repo => {{
+                    const box = document.createElement("div");
+                    box.textContent = repo;
+                    Object.assign(box.style, boxStyle());
+                    box.onclick = () => {{
+                        navStack.push(renderPage1_RepoButtons);
+                        renderPage2_ClassificationButtons(repo);
+                        backButton.style.display = "block";
+                    }};
+                    container.appendChild(box);
+                }});
+            }}
+
+            function renderPage2_ClassificationButtons(repo) {{
+                container.innerHTML = "";
+                setCenteredLayout();
+                Object.keys(data[repo]).forEach(classification => {{
+                    const btn = document.createElement("button");
+                    btn.textContent = classification;
+                    Object.assign(btn.style, buttonStyle());
+                    btn.onclick = () => {{
+                        navStack.push(() => renderPage2_ClassificationButtons(repo));
+                        renderPage3_PRList(repo, classification);
+                    }};
+                    container.appendChild(btn);
+                }});
+            }}
+
+            function renderPage3_PRList(repo, classification) {{
+                container.innerHTML = "";
+                setListLayout();
+
+                const input = document.createElement("input");
+                input.type = "text";
+                input.placeholder = "Search PR...";
+                Object.assign(input.style, {{
+                    width: "100%",
+                    padding: "12px",
+                    fontSize: "16px",
+                    marginBottom: "20px",
+                    border: "1px solid #ccc",
+                    borderRadius: "6px"
+                }});
+                container.appendChild(input);
+
+                const list = document.createElement("ul");
+                list.style.listStyleType = "none";
+                list.style.padding = "0";
+                container.appendChild(list);
+
+                function updateList(filter = "") {{
+                    list.innerHTML = "";
+                    const prs = data[repo][classification]["prs"];
+                    Object.keys(prs).filter(pr => pr.toLowerCase().includes(filter.toLowerCase())).sort().forEach(pr => {{
+                        const li = document.createElement("li");
+                        li.textContent = pr;
+                        li.style.cursor = "pointer";
+                        li.style.padding = "10px";
+                        li.style.borderBottom = "1px solid #eee";
+                        li.onclick = () => {{
+                            navStack.push(() => renderPage3_PRList(repo, classification));
+                            renderPage4_PRDetails(repo, classification, pr);
+                        }};
+                        list.appendChild(li);
+                    }});
+                }}
+
+                input.addEventListener("input", () => updateList(input.value));
+                updateList();
+            }}
+
+            function renderPage4_PRDetails(repo, classification, pr) {{
+                container.innerHTML = "";
+                setListLayout();
+
+                const prData = data[repo][classification]["prs"][pr];
+
+                const heading = document.createElement("h2");
+                heading.textContent = "Subfolders for PR " + pr;
+                heading.style.marginBottom = "20px";
+                container.appendChild(heading);
+
+                if (prData["has_summary"]) {{
+                    const summaryBtn = document.createElement("button");
+                    summaryBtn.textContent = "Summary (pr_results.txt)";
+                    Object.assign(summaryBtn.style, buttonStyle());
+                    summaryBtn.onclick = () => {{
+                        navStack.push(() => renderPage4_PRDetails(repo, classification, pr));
+                        renderPage5_Summary(prData.path);
+                    }};
+                    container.appendChild(summaryBtn);
+                }}
+
+                const list = document.createElement("ul");
+                list.style.listStyleType = "none";
+                list.style.padding = "0";
+                list.style.marginTop = "20px";
+
+                prData.subfolders.sort((a, b) => a.name.localeCompare(b.name)).forEach(sub => {{
+                    const li = document.createElement("li");
+                    li.textContent = sub.name;
+                    li.style.cursor = "pointer";
+                    li.style.padding = "10px";
+                    li.style.borderBottom = "1px solid #eee";
+                    li.onclick = () => {{
+                        navStack.push(() => renderPage4_PRDetails(repo, classification, pr));
+                        renderPage6_SubfolderDetails(repo, classification, pr, sub.name, sub.subfolders);
+                    }};
+                    list.appendChild(li);
+                }});
+
+                container.appendChild(list);
+            }}
+
+            function renderPage5_Summary(prPath) {{
+                container.innerHTML = "";
+                setListLayout();
+
+                const heading = document.createElement("h2");
+                heading.textContent = "Summary File Contents";
+                heading.style.marginBottom = "20px";
+                container.appendChild(heading);
+
+                const contentBox = document.createElement("pre");
+                contentBox.style.padding = "15px";
+                contentBox.style.backgroundColor = "#f8f8f8";
+                contentBox.style.border = "1px solid #ccc";
+                contentBox.style.whiteSpace = "pre-wrap";
+                contentBox.style.maxWidth = "100%";
+                contentBox.style.overflowX = "auto";
+                container.appendChild(contentBox);
+
+                const filePath = baseDir + "/" + prPath + "/pr_results.txt";
+                fetch(filePath)
+                    .then(resp => resp.text())
+                    .then(text => {{
+                        contentBox.textContent = text;
+                    }})
+                    .catch(() => {{
+                        contentBox.textContent = "Failed to load pr_results.txt";
+                    }});
+            }}
+
+function renderPage6_SubfolderDetails(repo, classification, pr, folderName, subfolderList) {{
+    container.innerHTML = "";
+    setListLayout();
+
+    const heading = document.createElement("h2");
+    heading.textContent = `Contents of ${{folderName}}`;
+    heading.style.marginBottom = "20px";
+    container.appendChild(heading);
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = "Search subfolders...";
+    Object.assign(input.style, {{
+        width: "100%",
+        padding: "12px",
+        fontSize: "16px",
+        marginBottom: "20px",
+        border: "1px solid #ccc",
+        borderRadius: "6px"
+    }});
+    container.appendChild(input);
+
+    const list = document.createElement("ul");
+    list.style.listStyleType = "none";
+    list.style.padding = "0";
+    container.appendChild(list);
+
+    function updateList(filter = "") {{
+        list.innerHTML = "";
+        const filtered = subfolderList.filter(name =>
+            name.toLowerCase().includes(filter.toLowerCase())
+        ).sort();
+
+        if (filtered.length === 0) {{
+            const emptyMsg = document.createElement("li");
+            emptyMsg.textContent = "No matching subfolders.";
+            emptyMsg.style.padding = "10px";
+            emptyMsg.style.color = "#888";
+            list.appendChild(emptyMsg);
+        }}
+
+        filtered.forEach(name => {{
+            const li = document.createElement("li");
+            li.textContent = name;
+            li.style.cursor = "pointer";
+            li.style.padding = "10px";
+            li.style.borderBottom = "1px solid #eee";
+
+            li.onclick = () => {{
+                const path = `${{baseDir}}/${{data[repo][classification]["prs"][pr].path}}/${{folderName}}/${{name}}/reports/html/index.html`;
+                window.open(path, "_blank");
+            }};
+
+            list.appendChild(li);
+        }});
+    }}
+
+    input.addEventListener("input", () => updateList(input.value));
+    updateList();
+}}
+
+            renderPage1_RepoButtons();
+        }});
+        """)
+
+        print(f"✅ JavaScript file written to: {output_path}")
