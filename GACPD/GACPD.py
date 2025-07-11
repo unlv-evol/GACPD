@@ -530,7 +530,6 @@ class GACPD:
                     print(f"PR Title: {self.repo_data[pr_nr]['title']}", file = pr_data_user)
                     print(f"PR Description: {self.repo_data[pr_nr]['body']}", file=pr_data_user)
                     print(f"PR Location: {self.repo_data[pr_nr]['html_url']}", file = pr_data_user)
-                    print(f"Files in PR: {self.repo_data[pr_nr]['commits_data'].keys()}", file = pr_data_user)
                     print(f"", file = pr_data_user)
 
                     self.results[pr_nr] = {}
@@ -608,6 +607,8 @@ class GACPD:
 
                                         if self.ct == 40:
                                             self.ct = 0
+                                        print(f"Files in PR: {fileName}",
+                                              file=pr_data_user)
 
                                         destPath = ("Results/Repos_files"+"/"+self.repo_check_number+
                                                     '/' +self.repo_divergent + '/' + new_file_dir+'/'+fileName)

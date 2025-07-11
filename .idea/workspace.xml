@@ -5,17 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5ab7b4e4-6f56-417f-8779-b78491b71120" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GACPD-50-40-30-fullAll.csv" beforeDir="false" afterPath="$PROJECT_DIR$/GACPD-50-40-30-fullAll.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/999-apache_kafka-linkedin_kafka" beforeDir="false" afterPath="$PROJECT_DIR$/999-apache_kafka-linkedin_kafka" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GACPD.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/GACPD.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GACPD/GACPD.py" beforeDir="false" afterPath="$PROJECT_DIR$/GACPD/GACPD.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ManualCheck/checks.py" beforeDir="false" afterPath="$PROJECT_DIR$/ManualCheck/checks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Methods/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/Methods/analysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Methods/totals.py" beforeDir="false" afterPath="$PROJECT_DIR$/Methods/totals.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Methods/dataLoader.py" beforeDir="false" afterPath="$PROJECT_DIR$/Methods/dataLoader.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dynamic_boxes.js" beforeDir="false" afterPath="$PROJECT_DIR$/dynamic_boxes.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/outputDebug.txt" beforeDir="false" afterPath="$PROJECT_DIR$/outputDebug.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/results-50-40-30-fullAll.csv" beforeDir="false" afterPath="$PROJECT_DIR$/results-50-40-30-fullAll.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,7 +103,9 @@
       <workItem from="1749838116522" duration="5276000" />
       <workItem from="1749917491659" duration="1731000" />
       <workItem from="1751638425628" duration="1424000" />
-      <workItem from="1752193244249" duration="3211000" />
+      <workItem from="1752193244249" duration="3361000" />
+      <workItem from="1752242267200" duration="1588000" />
+      <workItem from="1752257823435" duration="1144000" />
     </task>
     <servers />
   </component>

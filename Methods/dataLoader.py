@@ -74,6 +74,7 @@ def fetchPrData(source, destination, prs, destination_sha, token_list, ct):
                     for j in files:
                         status = j['status']
                         file_name = j['filename']
+                        print(file_name + "HERE")
                         added_lines = j['additions']
                         patched = j['patch']
                         removed_lines = j['deletions']
