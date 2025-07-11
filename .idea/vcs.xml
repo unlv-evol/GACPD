@@ -2,19 +2,39 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/ManualCheck/gitclones/apache/kafka" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/ManualCheck/gitclones/linkedin/kafka" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Results/Repos_clones/1/apache/kafka" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/2/apache/kafka" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/3/apache/kafka" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/5/apache/kafka" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/6/apache/kafka" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/7/apache/kafka" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/10/micke/valid_email2" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/11/NickWaterton/Roomba980-Python" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/12/jekyll/jekyll-admin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/14/getredash/redash" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/15/DMTF/python-redfish-library" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/16/coderholic/django-cities" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/17/spesmilo/electrum" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/18/apache/roller" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/2/dlindahl/omniauth-cas" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/3/ekohl/metadata_json_deps" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/4/lemurheavy/coveralls-ruby" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/5/openssh/openssh-portable" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/7/paramiko/paramiko" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/8/jagrosh/MusicBot" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/9/bitcoinj/bitcoinj" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_clones/999/apache/kafka" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Results/Repos_files/1/linkedin/kafka" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Results/Repos_files/2/linkedin/kafka" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Results/Repos_files/3/linkedin/kafka" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Results/Repos_files/5/linkedin/kafka" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Results/Repos_files/6/linkedin/kafka" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Results/Repos_files/7/linkedin/kafka" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_files/10/wolfemm/email_assessor" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_files/11/pschmitt/roombapy" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_files/12/ashmaroli/jekyll-manager" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_files/14/mozilla/redash" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_files/15/HewlettPackard/python-ilorest-library" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_files/16/yourlabs/django-cities-light" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_files/17/Electron-Cash/Electron-Cash" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_files/18/gmazza/tightblog" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_files/2/tduehr/omniauth-cas3" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_files/3/puppetlabs/dependency_checker" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_files/4/tagliala/coveralls-ruby-reborn" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_files/5/PowerShell/openssh-portable" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_files/7/ploxiln/paramiko-ng" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_files/8/Cosgy-Dev/JMusicBot-JP" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_files/9/langerhans/dogecoinj-new" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Results/Repos_files/999/linkedin/kafka" vcs="Git" />
   </component>
 </project>

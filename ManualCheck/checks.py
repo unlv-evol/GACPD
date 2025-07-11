@@ -49,6 +49,23 @@ def save_hunk_files(hunk_id, output_dir, additions_hunks, counts, type_of_change
 
 # Example usage
 if __name__ == "__main__":
+    import requests
+
+    # GitHub API endpoint for the repository
+    url = "https://api.github.com/repos/linkedin/kafka"
+
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Raise an error for bad status codes
+        data = response.json()
+        created_at = data.get("created_at")
+        if created_at:
+            print(f"Repository created at: {created_at}")
+        else:
+            print("The 'created_at' field is not found in the response.")
+    except requests.exceptions.RequestException as e:
+        print(f"Error during API request: {e}")
+    exit(0)
     if len(sys.argv) != 4:
         print("Usage: python checks.py <patch_file> <output_directory>")
         sys.exit(1)

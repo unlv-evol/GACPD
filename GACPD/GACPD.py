@@ -15,6 +15,7 @@ import Methods.common as common
 import Methods.commitLoader as commitloader
 from Methods.patchExtractionFunctions import divergence_date
 from Methods.patchExtractionFunctions import pr_patches
+import requests
 
 
 class GACPD:
@@ -529,6 +530,7 @@ class GACPD:
                     print(f"PR Title: {self.repo_data[pr_nr]['title']}", file = pr_data_user)
                     print(f"PR Description: {self.repo_data[pr_nr]['body']}", file=pr_data_user)
                     print(f"PR Location: {self.repo_data[pr_nr]['html_url']}", file = pr_data_user)
+                    print(f"Files in PR: {self.repo_data[pr_nr]['commits_data'].keys()}", file = pr_data_user)
                     print(f"", file = pr_data_user)
 
                     self.results[pr_nr] = {}
@@ -1002,9 +1004,25 @@ class GACPD:
 
     def obtain_git_information(self):
         repo_name = "Results/Repos_files"+"/"+self.repo_check_number+"/"+self.repo_divergent
-        self.renames = self.obtain_git_rename_history("2018-08-31T21:32:03Z", self.modern_day, repo_name)
+
+        url = f"https://api.github.com/repos/{self.repo_divergent}"
+
+        created_at = ""
+        try:
+            response = requests.get(url)
+            response.raise_for_status()  # Raise an error for bad status codes
+            data = response.json()
+            created_at = data.get("created_at")
+            if created_at:
+                print(f"Repository created at: {created_at}")
+            else:
+                print("The 'created_at' field is not found in the response.")
+        except requests.exceptions.RequestException as e:
+            print(f"Error during API request: {e}")
+
+        self.renames = self.obtain_git_rename_history(created_at, self.modern_day, repo_name)
         repo_name = "Results/Repos_clones" + "/" + self.repo_check_number + "/" + self.repo_main_line
-        self.renames_mainline = self.obtain_git_rename_history("2018-08-31T21:32:03Z", self.modern_day, repo_name)
+        self.renames_mainline = self.obtain_git_rename_history(created_at, self.modern_day, repo_name)
         self.cycles = self.find_rename_cyles(self.renames)
 
     def runClassification(self, prs_source):

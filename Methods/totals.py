@@ -67,41 +67,58 @@ def final_class(result_dict):
             except:
                 total_ERROR += 1
             total_E += 1
-            
-            
-        if total_MO==0 and total_ED==0 and total_SP==0:
-            _max = total_NA
-            _max_title = 'NA'
+
+        if total_MO == 0 and total_ED == 0:
             ultimate_class = 'NA'
-            if _max < total_OE:
-                _max = total_OE
+            _check_num = total_NA
+            if _check_num < total_OE:
                 ultimate_class = 'CC'
-                _max_title = 'CC'
-            if _max < total_NE:
-                _max = total_NE
+                _check_num = total_OE
+            if _check_num < total_NE:
                 ultimate_class = 'NE'
-                _max_title = 'NE'
-            if _max < total_ERROR:
-                _max = total_ERROR
+                _check_num = total_NE
+            if _check_num < total_ERROR:
                 ultimate_class = 'ERROR'
-                _max_title = 'ERROR'
         else:
-            _max = total_ED
-            _max_title = 'ED'
-            ultimate_class = 'ED'
-            if _max < total_MO:
-                _max = total_MO
+            if total_MO != 0:
                 ultimate_class = 'MO'
-                _max_title = 'MO'
-            if _max < total_SP:
-                _max = total_SP
-                ultimate_class = 'SP'
-                _max_title = 'SP'
-            
-            if total_MO == total_ED:
-                _max = total_SP
-                ultimate_class= 'SP'
-                _max_title = 'SP'
+            elif total_ED != 0:
+                ultimate_class = 'ED'
+            else:
+                ultimate_class = 'NA'
+        # if total_MO==0 and total_ED==0 and total_SP==0:
+        #     _max = total_NA
+        #     _max_title = 'NA'
+        #     ultimate_class = 'NA'
+        #     if _max < total_OE:
+        #         _max = total_OE
+        #         ultimate_class = 'CC'
+        #         _max_title = 'CC'
+        #     if _max < total_NE:
+        #         _max = total_NE
+        #         ultimate_class = 'NE'
+        #         _max_title = 'NE'
+        #     if _max < total_ERROR:
+        #         _max = total_ERROR
+        #         ultimate_class = 'ERROR'
+        #         _max_title = 'ERROR'
+        # else:
+        #     _max = total_ED
+        #     _max_title = 'ED'
+        #     ultimate_class = 'ED'
+        #     if _max < total_MO:
+        #         _max = total_MO
+        #         ultimate_class = 'MO'
+        #         _max_title = 'MO'
+        #     if _max < total_SP:
+        #         _max = total_SP
+        #         ultimate_class = 'SP'
+        #         _max_title = 'SP'
+        #
+        #     if total_MO == total_ED:
+        #         _max = total_SP
+        #         ultimate_class= 'SP'
+        #         _max_title = 'SP'
         
         pr_classes[pr] = {
                 'totals':
