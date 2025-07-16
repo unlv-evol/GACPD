@@ -6,15 +6,23 @@ import shutil
 import subprocess
 import matplotlib.pyplot as plt
 import time
-import Methods.totals as totals
+# import Methods.totals as totals
+import NewPaReco.utils.totals as totals
 from collections import defaultdict
-import Methods.analysis as analysis
-import Methods.classifier as classifier
-import Methods.dataLoader as dataloader
-import Methods.common as common
-import Methods.commitLoader as commitloader
-from Methods.patchExtractionFunctions import divergence_date
-from Methods.patchExtractionFunctions import pr_patches
+# import Methods.analysis as analysis
+import NewPaReco.utils.analysis as analysis
+# import Methods.classifier as classifier
+import NewPaReco.core.classifier as classifier
+# import Methods.dataLoader as dataloader
+import NewPaReco.core.data_extractor as dataloader
+# import Methods.common as common
+import NewPaReco.utils.common as common
+# import Methods.commitLoader as commitloader
+import NewPaReco.utils.helpers as commitloader
+# from Methods.patchExtractionFunctions import divergence_date
+from NewPaReco.utils.helpers import divergence_date
+# from Methods.patchExtractionFunctions import pr_patches
+from NewPaReco.core.patch_extractor import pullrequest_patches
 import requests
 
 
