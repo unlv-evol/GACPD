@@ -37,7 +37,7 @@ def save_patch(storageDir, fileName, file, dup_count):
     patch_path = ''
     if not os.path.exists(storageDir):
         os.makedirs(storageDir)
-        patch_path = f'{storageDir}{fileName}.patch'
+        patch_path = f'{storageDir}/{fileName}.patch'
         with open(patch_path, 'x') as patch:
             patch.writelines(file)
         # f = open(patch_path, 'x')
@@ -46,8 +46,8 @@ def save_patch(storageDir, fileName, file, dup_count):
         # f.close()
         
     else:
-        if not os.path.isfile(f'{storageDir}{fileName}'):
-            patch_path = f'{storageDir}{fileName}.patch'
+        if not os.path.isfile(f'{storageDir}/{fileName}'):
+            patch_path = f'{storageDir}/{fileName}.patch'
             with open(patch_path, 'x') as patch:
                 patch.writelines(file)
             # f = open(patch_path, 'w')
@@ -55,7 +55,7 @@ def save_patch(storageDir, fileName, file, dup_count):
             #     f.write(line)
             # f.close()
         else:
-            patch_path = f'{storageDir}{fileName}_{dup_count}.patch'
+            patch_path = f'{storageDir}/{fileName}_{dup_count}.patch'
             with open(patch_path, 'x') as patch:
                 patch.writelines(file)
             # f = open(patch_path, 'w')
