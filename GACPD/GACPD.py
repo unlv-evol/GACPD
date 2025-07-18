@@ -359,7 +359,7 @@ class GACPD:
         pr_patch_ml_str = ''
         pr_title_ml_str = ''
 
-        pr_patch_ml, pr_title_ml, pr_all_merged_ml, self.ct = pr_patches(self.repo_main_line, self.diverge_date,
+        pr_patch_ml, pr_title_ml, self.ct = pullrequest_patches(self.repo_main_line, self.diverge_date,
                                                                          self.cut_off_date, self.token_list, self.ct)
 
         # at least one of the mainline or fork should have a pr with patch
@@ -449,9 +449,9 @@ class GACPD:
         analysis.all_class_bar(totals_list, self.repo_check_number, self.repo_main_line, self.repo_divergent, True)
 
     def fetchPrData(self):
-        destination_sha, self.ct = dataloader.getDestinationSha(self.repo_divergent, self.cut_off_date, self.token_list,
+        destination_sha, self.ct = dataloader.get_variant_sha(self.repo_divergent, self.cut_off_date, self.token_list,
                                                                 self.ct)
-        self.ct, self.repo_data, req, runtime = dataloader.fetchPrData(self.repo_main_line, self.repo_divergent, self.prs,
+        self.ct, self.repo_data, req, runtime = dataloader.fetch_pullrequest_data(self.repo_main_line, self.repo_divergent, self.prs,
                                                                        destination_sha, self.token_list, self.ct)
 
     def get_added_git_files(self, mainline, baseSha, prnum):
@@ -528,9 +528,9 @@ class GACPD:
 
                     print(f'==================================================', file=fileDebug)
                     print(f'Currently Checking PR: {pr_nr}', file=fileDebug)
-                    print(f"Created At: {self.repo_data[pr_nr]["created_at"]}", file=fileDebug)
-                    print(f"Merged At: {self.repo_data[pr_nr]["merged_at"]}", file=fileDebug)
-                    print(f"Base Sha: {self.repo_data[pr_nr]["base_sha_added"]}", file=fileDebug)
+                    print(f'Created At: {self.repo_data[pr_nr]["created_at"]}', file=fileDebug)
+                    print(f'Merged At: {self.repo_data[pr_nr]["merged_at"]}', file=fileDebug)
+                    print(f'Base Sha: {self.repo_data[pr_nr]["base_sha_added"]}', file=fileDebug)
                     print(f'==================================================', file=fileDebug)
 
                     pr_data_user = open(f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/pr_results.txt", "w")
@@ -563,8 +563,8 @@ class GACPD:
                             '''
                                 THe next few if statements check if the file is a valid file that GACPD can check
                             '''
-                            if os.path.isdir(f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}") is False:
-                                os.makedirs(f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}")
+                            if os.path.isdir(f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}') is False:
+                                os.makedirs(f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}')
 
                             self.results[pr_nr][file] = {}
                             if file.find(".") < 0:
@@ -582,11 +582,11 @@ class GACPD:
                                 self.results[pr_nr][file]['result'] = result_mod
 
                                 shutil.copytree(
-                                    f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}",
-                                    f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/CC_EXT/{file.replace("/", "_").replace(".", "_")}")
+                                    f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}',
+                                    f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/CC_EXT/{file.replace("/", "_").replace(".", "_")}')
 
                                 shutil.rmtree(
-                                    f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}")
+                                    f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}')
                                 continue
 
                             '''
@@ -599,15 +599,15 @@ class GACPD:
                                         fileDir = ''
 
                                         if len(files[file]) == 1:
-                                            fileName = commitloader.fileName(file)
-                                            fileDir = commitloader.fileDir(file)
+                                            fileName = commitloader.file_name(file)
+                                            fileDir = commitloader.file_dir(file)
                                             status = files[file][0]['status']
-                                        else:
-                                            first_commit, last_commit = classifier.getFirstLastCommit(
-                                                self.repo_data[pr_nr]['commits_data'])
-                                            fileName = commitloader.fileName(file)
-                                            fileDir = commitloader.fileDir(file)
-                                            status = first_commit['status']
+                                        # else:
+                                        #     first_commit, last_commit = classifier.getFirstLastCommit(
+                                        #         self.repo_data[pr_nr]['commits_data'])
+                                        #     fileName = commitloader.file_name(file)
+                                        #     fileDir = commitloader.file_dir(file)
+                                        #     status = first_commit['status']
 
                                         new_file_dir = ''
                                         for h in fileDir:
@@ -677,11 +677,11 @@ class GACPD:
 
                                             try:
                                                 shutil.copytree(
-                                                    f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}",
-                                                    f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/NA_ADDED/{file.replace("/", "_").replace(".", "_")}")
+                                                    f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}',
+                                                    f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/NA_ADDED/{file.replace("/", "_").replace(".", "_")}')
 
                                                 shutil.rmtree(
-                                                    f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}")
+                                                    f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}')
                                             except Exception as e2:
                                                 pass
 
@@ -780,11 +780,11 @@ class GACPD:
                                                 ED_total += 1
                                                 break
 
-                                        shutil.copytree('src', f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}/src",
+                                        shutil.copytree('src', f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}/src',
                                                         dirs_exist_ok=True)
-                                        shutil.copytree('cmp', f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}/cmp",
+                                        shutil.copytree('cmp', f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}/cmp',
                                                         dirs_exist_ok=True)
-                                        shutil.copytree('reports', f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}/reports",
+                                        shutil.copytree('reports', f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}/reports',
                                                         dirs_exist_ok=True)
 
                                         self.remove_all_files('src')
@@ -820,7 +820,7 @@ class GACPD:
                                         result_mod['patchPath'] = patchPath
                                         result_mod['patchClass'] = classification
 
-                                        with open(f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}/results.txt", 'w') as f:
+                                        with open(f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}/results.txt', 'w') as f:
                                             f.write(f"In PR: {pr_nr}\n")
                                             f.write(f"Mainline is: {self.repo_main_line}\n")
                                             f.write(f"Divergent Repo is: {self.repo_divergent}\n")
@@ -843,10 +843,10 @@ class GACPD:
                                             print(f"  - {check}", file=pr_data_user)
                                         print(f"", file=pr_data_user)
 
-                                        shutil.copytree(f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}",
-                                                        f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{classification}/{file.replace("/", "_").replace(".", "_")}")
+                                        shutil.copytree(f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}',
+                                                        f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/{classification}/{file.replace("/", "_").replace(".", "_")}')
 
-                                        shutil.rmtree(f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}")
+                                        shutil.rmtree(f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}')
                                         self.results[pr_nr][file]['result'] = result_mod
 
                                     else:
@@ -866,11 +866,11 @@ class GACPD:
 
                                     try:
                                         shutil.copytree(
-                                            f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}",
-                                            f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/ERROR/{file.replace("/", "_").replace(".", "_")}")
+                                            f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}',
+                                            f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/ERROR/{file.replace("/", "_").replace(".", "_")}')
 
                                         shutil.rmtree(
-                                            f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}")
+                                            f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}')
                                     except Exception as e2:
                                         pass
 
@@ -885,11 +885,11 @@ class GACPD:
                                     self.results[pr_nr][file]['result'] = result_mod
                                     try:
                                         shutil.copytree(
-                                            f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}",
-                                            f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/CC_EXT/{file.replace("/", "_").replace(".", "_")}")
+                                            f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}',
+                                            f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/CC_EXT/{file.replace("/", "_").replace(".", "_")}')
 
                                         shutil.rmtree(
-                                            f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}")
+                                            f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}')
                                     except Exception as e2:
                                         pass
                                 else:
@@ -897,11 +897,11 @@ class GACPD:
                                     self.results[pr_nr][file]['result'] = result_mod
                                     try:
                                         shutil.copytree(
-                                            f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}",
-                                            f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/NE/{file.replace("/", "_").replace(".", "_")}")
+                                            f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}',
+                                            f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/NE/{file.replace("/", "_").replace(".", "_")}')
 
                                         shutil.rmtree(
-                                            f"Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}")
+                                            f'Results/Repos_results/{self.repo_check_number}/{pr_nr}/{file.replace("/", "_").replace(".", "_")}')
                                     except Exception as e2:
                                         pass
 
@@ -941,7 +941,7 @@ class GACPD:
         command = [
             "git",
             "clone",
-            f"https://github.com/{repo_owner[1] + "/" + repo_owner[2]}",
+            f'https://github.com/{repo_owner[1]}/{repo_owner[2]}',
         ]
 
         subprocess.run(command)
