@@ -621,7 +621,7 @@ class GACPD:
                                         destPath = ("Results/Repos_files"+"/"+self.repo_check_number+
                                                     '/' +self.repo_divergent + '/' + new_file_dir+'/'+fileName)
 
-                                        divergent_fileNameForRenamesOrAdditions = new_file_dir+fileName
+                                        divergent_fileNameForRenamesOrAdditions = new_file_dir + fileName
 
                                         destPath = os.path.normpath(destPath)
                                         destPath = destPath.replace('\\', '/')
@@ -639,9 +639,13 @@ class GACPD:
                                         patchPath = os.path.normpath(patchPath)
                                         patchPath = patchPath.replace('\\', '/')
 
+                                        # print(f"Patch Patch: {patchPath}")
+
                                         patchName = fileName.split('.')[0]
                                         patchPath, dup_count = classifier.save_patch(patchPath, patchName, patch_lines,
                                                                                      dup_count)
+                                        # print(f"Patch Patch: {patchPath}")
+                                        # sys.exit()
                                         '''
                                             Now check if the file exists - if it doesn't then check for the renames
                                             If its not a renamed file then immediatly check
