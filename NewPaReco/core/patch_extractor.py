@@ -1,7 +1,7 @@
 import time
 from dateutil import parser
-from src.constants import constant
-from src.utils import helpers
+from NewPaReco.constants import constant
+from NewPaReco.utils import helpers
 
 
 class GetOutOfLoop(Exception):

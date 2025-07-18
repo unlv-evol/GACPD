@@ -7,7 +7,7 @@ import sys
 import os
 import re
 import time
-from src.utils import common
+from NewPaReco.utils import common
 
 try:
     import bitarray

@@ -1,6 +1,6 @@
 import time
-from src.constants import constant
-from src.utils import helpers
+from NewPaReco.constants import constant
+from NewPaReco.utils import helpers
 
 from datetime import datetime
 import pandas as pd
@@ -31,11 +31,18 @@ def fetch_pullrequest_data(mainline, variant, pullrequests, variant_sha, token_l
             pullrequest_data[pullrequest]['pr_url'] = pr_request
             pullrequest_data[pullrequest]['created_at'] = pr['created_at']
             pullrequest_data[pullrequest]['merged_at']  = pr['merged_at']
+
+            pullrequest_data[pullrequest]['base_sha_added'] = pr['base']['sha']
+            pullrequest_data[pullrequest]['head_sha_added'] = pr['head']['sha']
+
             pullrequest_data[pullrequest]['merge_commit_sha']  = pr['merge_commit_sha']
             pullrequest_data[pullrequest]['commits']  = pr['commits'] # number of commits 
             pullrequest_data[pullrequest]['changed_files'] = pr['changed_files']
             pullrequest_data[pullrequest]['commits_data'] = list()
             pullrequest_data[pullrequest]['destination_sha'] = variant_sha
+            pullrequest_data[pullrequest]['html_url'] = pr['html_url']
+            pullrequest_data[pullrequest]['title'] = pr['title']
+            pullrequest_data[pullrequest]['body'] = pr['body']
 
             # get the commit sha before pull request creation date
             if ct == token_length:

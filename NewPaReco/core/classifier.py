@@ -1,7 +1,7 @@
 import difflib
 import os
-from src.constants import constant
-from src.utils import helpers
+from NewPaReco.constants import constant
+from NewPaReco.utils import helpers
 from . import patch_loader as patchloader
 from . import source_loader as sourceloader
 
