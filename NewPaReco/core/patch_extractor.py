@@ -9,6 +9,7 @@ class GetOutOfLoop(Exception):
     pass
 
 API_URL = "https://api.github.com/graphql"
+pr_set = set()
 
 # Include issueCount so we can probe density
 QUERY_TEMPLATE = """
@@ -25,6 +26,7 @@ query($after: String) {{
         title
         number
         createdAt
+        mergedAt
       }}
     }}
     pageInfo {{
@@ -83,25 +85,33 @@ def crawl_search_slice(repo, slice_start: datetime, slice_end: datetime,
         block = data["search"]
         if issue_count is None:
             issue_count = block.get("issueCount", None)
+        if print_rows is False:
+            print("Not outputting obtained issues - just getting issue count")
+            return pr, title, ct, (issue_count if issue_count is not None else 0)
 
         for node in block["nodes"]:
             pr_num = node["number"]
             pr_title = node["title"]
             pr_created = node["createdAt"]
+            pr_merged = node["mergedAt"]
             pr_dt = parse_iso_z(pr_created)
 
             # Only print/keep if truly within the global bounds
             if pr_dt < start_dt or pr_dt > end_dt:
                 continue
 
+            if pr_merged is None:
+                continue
+
             # bug keyword match
             low = pr_title.lower()
             if any(bug in low for bug in bug_keyword):
-                if pr_num in pr:
-                    break
+                if pr_num in pr_set:
+                    continue
 
                 title.append(pr_title)
                 pr.append(pr_num)
+                pr_set.add(pr_num)
                 total_in_slice += 1
 
                 if print_rows:
@@ -140,6 +150,7 @@ def adaptive_windowed_crawl(repo, start_dt: datetime, end_dt: datetime,
             repo, current_start, current_end, token_list, ct, bug_keyword,
             start_dt, end_dt, print_rows=False
         )
+        pr_set.clear()
         ct = ct_probe  # advance token pointer
 
         # Adapt window size based on measured density
@@ -156,6 +167,7 @@ def adaptive_windowed_crawl(repo, start_dt: datetime, end_dt: datetime,
             repo, current_start, current_end, token_list, ct, bug_keyword,
             start_dt, end_dt, print_rows=True
         )
+        pr_set.clear()
         all_prs.extend(pr_slice)
         all_titles.extend(titles_slice)
 
@@ -200,5 +212,6 @@ def pullrequest_patches(repo, diverge_date, least_date, token_list, ct):
     print(f"# Done. Printed {len(pr)} PRs.", file=sys.stderr)
     runtime = time.time() - start
     print(f"---{runtime} seconds ---")
+    pr_set.clear()
 
     return pr, title, ct
