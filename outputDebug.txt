@@ -1,0 +1,116 @@
+==================================================
+Currently Checking PR: 12373
+Created At: 2022-07-01T13:55:57Z
+Merged At: 2022-07-03T01:48:08Z
+Base Sha: 6bf5bfc2982158c3a1bfff4a0f65ea901ea84e7a
+==================================================
+Current Added: []
+Current Renames: {}
+Patch Path: Results/Repos_files/999/apache/kafka/12373/patches/streams/src/test/java/org/apache/kafka/streams/processor/internals/metricsTaskMetricsTest.patch
+Dest Path: Results/Repos_files/999/linkedin/kafka/streams/src/test/java/org/apache/kafka/streams/processor/internals/metrics/TaskMetricsTest.java
+File of Linkedin to check: streams/src/test/java/org/apache/kafka/streams/processor/internals/metrics/TaskMetricsTest.java
+File of Apache to check: streams/src/test/java/org/apache/kafka/streams/processor/internals/metrics/TaskMetricsTest.java
+==================================================
+Currently Checking PR: 12371
+Created At: 2022-06-30T22:11:21Z
+Merged At: 2022-07-01T04:03:54Z
+Base Sha: 1daa149730e3c56b7b6fe8f14369178273e8efc4
+==================================================
+Current Added: []
+Current Renames: {}
+Patch Path: Results/Repos_files/999/apache/kafka/12371/patches/metadata/src/main/java/org/apache/kafka/timelineSnapshottableHashTable.patch
+Dest Path: Results/Repos_files/999/linkedin/kafka/metadata/src/main/java/org/apache/kafka/timeline/SnapshottableHashTable.java
+File of Linkedin to check: metadata/src/main/java/org/apache/kafka/timeline/SnapshottableHashTable.java
+File of Apache to check: metadata/src/main/java/org/apache/kafka/timeline/SnapshottableHashTable.java
+Patch Path: Results/Repos_files/999/apache/kafka/12371/patches/metadata/src/test/java/org/apache/kafka/timelineSnapshottableHashTableTest.patch
+Dest Path: Results/Repos_files/999/linkedin/kafka/metadata/src/test/java/org/apache/kafka/timeline/SnapshottableHashTableTest.java
+File of Linkedin to check: metadata/src/test/java/org/apache/kafka/timeline/SnapshottableHashTableTest.java
+File of Apache to check: metadata/src/test/java/org/apache/kafka/timeline/SnapshottableHashTableTest.java
+==================================================
+Currently Checking PR: 12363
+Created At: 2022-06-29T17:08:49Z
+Merged At: 2022-07-03T17:02:59Z
+Base Sha: a82a8e02cea72261d52b6764e94b93b085b038ac
+==================================================
+Current Added: []
+Current Renames: {}
+Patch Path: Results/Repos_files/999/apache/kafka/12363/patches/streams/src/main/java/org/apache/kafka/streamsKafkaStreams.patch
+Dest Path: Results/Repos_files/999/linkedin/kafka/streams/src/main/java/org/apache/kafka/streams/KafkaStreams.java
+File of Linkedin to check: streams/src/main/java/org/apache/kafka/streams/KafkaStreams.java
+File of Apache to check: streams/src/main/java/org/apache/kafka/streams/KafkaStreams.java
+Patch Path: Results/Repos_files/999/apache/kafka/12363/patches/streams/src/main/java/org/apache/kafka/streams/processor/internalsPartitionGroup.patch
+Dest Path: Results/Repos_files/999/linkedin/kafka/streams/src/main/java/org/apache/kafka/streams/processor/internals/PartitionGroup.java
+File of Linkedin to check: streams/src/main/java/org/apache/kafka/streams/processor/internals/PartitionGroup.java
+File of Apache to check: streams/src/main/java/org/apache/kafka/streams/processor/internals/PartitionGroup.java
+Patch Path: Results/Repos_files/999/apache/kafka/12363/patches/streams/src/main/java/org/apache/kafka/streams/processor/internalsStreamTask.patch
+Dest Path: Results/Repos_files/999/linkedin/kafka/streams/src/main/java/org/apache/kafka/streams/processor/internals/StreamTask.java
+File of Linkedin to check: streams/src/main/java/org/apache/kafka/streams/processor/internals/StreamTask.java
+File of Apache to check: streams/src/main/java/org/apache/kafka/streams/processor/internals/StreamTask.java
+Patch Path: Results/Repos_files/999/apache/kafka/12363/patches/streams/src/main/java/org/apache/kafka/streams/processor/internalsStreamThread.patch
+Dest Path: Results/Repos_files/999/linkedin/kafka/streams/src/main/java/org/apache/kafka/streams/processor/internals/StreamThread.java
+File of Linkedin to check: streams/src/main/java/org/apache/kafka/streams/processor/internals/StreamThread.java
+File of Apache to check: streams/src/main/java/org/apache/kafka/streams/processor/internals/StreamThread.java
+Patch Path: Results/Repos_files/999/apache/kafka/12363/patches/clients/src/main/java/org/apache/kafka/clients/consumer/internalsFetcherMetricsRegistry.patch
+Dest Path: Results/Repos_files/999/linkedin/kafka/clients/src/main/java/org/apache/kafka/clients/consumer/internals/FetcherMetricsRegistry.java
+File of Linkedin to check: clients/src/main/java/org/apache/kafka/clients/consumer/internals/FetcherMetricsRegistry.java
+File of Apache to check: clients/src/main/java/org/apache/kafka/clients/consumer/internals/FetcherMetricsRegistry.java
+Patch Path: Results/Repos_files/999/apache/kafka/12363/patches/core/src/main/scala/kafka/clusterBrokerEndPoint.patch
+Dest Path: Results/Repos_files/999/linkedin/kafka/core/src/main/scala/kafka/cluster/BrokerEndPoint.scala
+File of Linkedin to check: core/src/main/scala/kafka/cluster/BrokerEndPoint.scala
+File of Apache to check: core/src/main/scala/kafka/cluster/BrokerEndPoint.scala
+Patch Path: Results/Repos_files/999/apache/kafka/12363/patches/core/src/main/scala/kafka/serverControllerApis.patch
+Dest Path: Results/Repos_files/999/linkedin/kafka/core/src/main/scala/kafka/server/ControllerApis.scala
+File of Linkedin to check: core/src/main/scala/kafka/server/ControllerApis.scala
+File of Apache to check: core/src/main/scala/kafka/server/ControllerApis.scala
+Patch Path: Results/Repos_files/999/apache/kafka/12363/patches/core/src/test/scala/unit/kafka/clusterBrokerEndPointTest.patch
+Dest Path: Results/Repos_files/999/linkedin/kafka/core/src/test/scala/unit/kafka/cluster/BrokerEndPointTest.scala
+File of Linkedin to check: core/src/test/scala/unit/kafka/cluster/BrokerEndPointTest.scala
+File of Apache to check: core/src/test/scala/unit/kafka/cluster/BrokerEndPointTest.scala
+Patch Path: Results/Repos_files/999/apache/kafka/12363/patches/core/src/test/scala/unit/kafka/serverControllerApisTest.patch
+Dest Path: Results/Repos_files/999/linkedin/kafka/core/src/test/scala/unit/kafka/server/ControllerApisTest.scala
+File of Linkedin to check: core/src/test/scala/unit/kafka/server/ControllerApisTest.scala
+File of Apache to check: core/src/test/scala/unit/kafka/server/ControllerApisTest.scala
+Patch Path: Results/Repos_files/999/apache/kafka/12363/patches/docsupgrade.patch
+Dest Path: Results/Repos_files/999/linkedin/kafka/docs/upgrade.html
+File of Linkedin to check: docs/upgrade.html
+File of Apache to check: docs/upgrade.html
+Patch Path: Results/Repos_files/999/apache/kafka/12363/patches/metadata/src/main/java/org/apache/kafka/timelineSnapshottableHashTable.patch
+Dest Path: Results/Repos_files/999/linkedin/kafka/metadata/src/main/java/org/apache/kafka/timeline/SnapshottableHashTable.java
+File of Linkedin to check: metadata/src/main/java/org/apache/kafka/timeline/SnapshottableHashTable.java
+File of Apache to check: metadata/src/main/java/org/apache/kafka/timeline/SnapshottableHashTable.java
+Patch Path: Results/Repos_files/999/apache/kafka/12363/patches/metadata/src/test/java/org/apache/kafka/timelineSnapshottableHashTableTest.patch
+Dest Path: Results/Repos_files/999/linkedin/kafka/metadata/src/test/java/org/apache/kafka/timeline/SnapshottableHashTableTest.java
+File of Linkedin to check: metadata/src/test/java/org/apache/kafka/timeline/SnapshottableHashTableTest.java
+File of Apache to check: metadata/src/test/java/org/apache/kafka/timeline/SnapshottableHashTableTest.java
+Patch Path: Results/Repos_files/999/apache/kafka/12363/patches/streams/src/test/java/org/apache/kafka/streams/processor/internals/metricsTaskMetricsTest.patch
+Dest Path: Results/Repos_files/999/linkedin/kafka/streams/src/test/java/org/apache/kafka/streams/processor/internals/metrics/TaskMetricsTest.java
+File of Linkedin to check: streams/src/test/java/org/apache/kafka/streams/processor/internals/metrics/TaskMetricsTest.java
+File of Apache to check: streams/src/test/java/org/apache/kafka/streams/processor/internals/metrics/TaskMetricsTest.java
+Patch Path: Results/Repos_files/999/apache/kafka/12363/patches/streams/src/test/java/org/apache/kafka/streams/processor/internalsPartitionGroupTest.patch
+Dest Path: Results/Repos_files/999/linkedin/kafka/streams/src/test/java/org/apache/kafka/streams/processor/internals/PartitionGroupTest.java
+File of Linkedin to check: streams/src/test/java/org/apache/kafka/streams/processor/internals/PartitionGroupTest.java
+File of Apache to check: streams/src/test/java/org/apache/kafka/streams/processor/internals/PartitionGroupTest.java
+==================================================
+Currently Checking PR: 12362
+Created At: 2022-06-29T13:42:55Z
+Merged At: 2022-07-01T02:51:57Z
+Base Sha: 8fb8b496cc489895885232659417e80829116fd9
+==================================================
+Current Added: []
+Current Renames: {}
+Patch Path: Results/Repos_files/999/apache/kafka/12362/patches/core/src/main/scala/kafka/clusterPartition.patch
+Dest Path: Results/Repos_files/999/linkedin/kafka/core/src/main/scala/kafka/cluster/Partition.scala
+File of Linkedin to check: core/src/main/scala/kafka/cluster/Partition.scala
+File of Apache to check: core/src/main/scala/kafka/cluster/Partition.scala
+Patch Path: Results/Repos_files/999/apache/kafka/12362/patches/core/src/main/scala/kafka/serverAlterIsrManager.patch
+Dest Path: Results/Repos_files/999/linkedin/kafka/core/src/main/scala/kafka/server/AlterIsrManager.scala
+File of Linkedin to check: core/src/main/scala/kafka/server/AlterIsrManager.scala
+File of Apache to check: core/src/main/scala/kafka/server/AlterIsrManager.scala
+Patch Path: Results/Repos_files/999/apache/kafka/12362/patches/core/src/test/scala/unit/kafka/clusterPartitionTest.patch
+Dest Path: Results/Repos_files/999/linkedin/kafka/core/src/test/scala/unit/kafka/cluster/PartitionTest.scala
+File of Linkedin to check: core/src/test/scala/unit/kafka/cluster/PartitionTest.scala
+File of Apache to check: core/src/test/scala/unit/kafka/cluster/PartitionTest.scala
+Patch Path: Results/Repos_files/999/apache/kafka/12362/patches/core/src/test/scala/unit/kafka/serverAlterIsrManagerTest.patch
+Dest Path: Results/Repos_files/999/linkedin/kafka/core/src/test/scala/unit/kafka/server/AlterIsrManagerTest.scala
+File of Linkedin to check: core/src/test/scala/unit/kafka/server/AlterIsrManagerTest.scala
+File of Apache to check: core/src/test/scala/unit/kafka/server/AlterIsrManagerTest.scala

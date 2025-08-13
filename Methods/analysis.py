@@ -111,6 +111,7 @@ def all_class_bar(height, pr_nr, mainline, variant, plotting=False):
     
     plt.ylabel('Frequency', fontsize=20)
 #     plt.savefig("Plots/"+str(pr_nr) + "_All_classes_bar"+".png", format="PNG",  dpi=80, bbox_inches='tight')
+    plt.savefig(f'{pr_nr}-{mainline.replace('/', '_')}-{variant.replace('/', '_')}', format="PNG", dpi=80)
     if plotting:
         plt.show()
     
