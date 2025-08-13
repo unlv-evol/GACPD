@@ -5,13 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5ab7b4e4-6f56-417f-8779-b78491b71120" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/999-apache_kafka-linkedin_kafka" beforeDir="false" afterPath="$PROJECT_DIR$/999-apache_kafka-linkedin_kafka" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GACPD.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/GACPD.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GACPD/GACPD.py" beforeDir="false" afterPath="$PROJECT_DIR$/GACPD/GACPD.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/10-micke_valid_email2-wolfemm_email_assessor" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/11-NickWaterton_Roomba980-Python-pschmitt_roombapy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/12-jekyll_jekyll-admin-ashmaroli_jekyll-manager" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/14-getredash_redash-mozilla_redash" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/15-DMTF_python-redfish-library-HewlettPackard_python-ilorest-library" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/16-coderholic_django-cities-yourlabs_django-cities-light" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/17-spesmilo_electrum-Electron-Cash_Electron-Cash" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/18-apache_roller-gmazza_tightblog" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/2-dlindahl_omniauth-cas-tduehr_omniauth-cas3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/3-ekohl_metadata_json_deps-puppetlabs_dependency_checker" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/4-lemurheavy_coveralls-ruby-tagliala_coveralls-ruby-reborn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/5-openssh_openssh-portable-PowerShell_openssh-portable" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/7-paramiko_paramiko-ploxiln_paramiko-ng" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/8-jagrosh_MusicBot-Cosgy-Dev_JMusicBot-JP" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/9-bitcoinj_bitcoinj-langerhans_dogecoinj-new" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/999-apache_kafka-linkedin_kafka" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GACPD-50-40-30-full.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GACPD-50-40-30-full3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GACPD-50-40-30-full4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GACPD-50-40-30-full5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GACPD-50-40-30-fullAll.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GACPD-50-40-30-new.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Methods/dataLoader.py" beforeDir="false" afterPath="$PROJECT_DIR$/Methods/dataLoader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dynamic_boxes.js" beforeDir="false" afterPath="$PROJECT_DIR$/dynamic_boxes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/outputDebug.txt" beforeDir="false" afterPath="$PROJECT_DIR$/outputDebug.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamic_boxes.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results-50-40-30-full.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results-50-40-30-full3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results-50-40-30-full4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results-50-40-30-full5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results-50-40-30-fullAll.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results-50-40-30-new.csv" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +53,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "GonzalooDelgado"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/unlv-evol/GACPD.git",
+    "accountId": "cf4dadb5-864e-480d-8016-89a9f648aa9f"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 5
@@ -37,26 +74,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.GACPD.executor&quot;: &quot;Run&quot;,
-    &quot;Python.analysis.executor&quot;: &quot;Run&quot;,
-    &quot;Python.checks.executor&quot;: &quot;Run&quot;,
-    &quot;Python.gitLogCheker.executor&quot;: &quot;Run&quot;,
-    &quot;Python.history_backtrack.executor&quot;: &quot;Run&quot;,
-    &quot;Python.resultsCompare.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;0.1.3&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/gonzalo/Desktop/GACPD&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.GACPD.executor": "Run",
+    "Python.analysis.executor": "Run",
+    "Python.checks.executor": "Run",
+    "Python.gitLogCheker.executor": "Run",
+    "Python.history_backtrack.executor": "Run",
+    "Python.resultsCompare.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/gonzalo/Desktop/GACPD",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\dgonz\Desktop\GACPD\ManualCheck\src" />
@@ -66,8 +103,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-PY-251.26927.74" />
-        <option value="bundled-python-sdk-657d8234b839-64d779b69b7a-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.26927.74" />
+        <option value="bundled-js-predefined-d6986cc7102b-e03c56caf84a-JavaScript-PY-252.23892.515" />
+        <option value="bundled-python-sdk-7e47963ff851-f0eec537fc84-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.23892.515" />
       </set>
     </attachedChunks>
   </component>
@@ -106,6 +143,7 @@
       <workItem from="1752193244249" duration="3361000" />
       <workItem from="1752242267200" duration="1588000" />
       <workItem from="1752257823435" duration="1144000" />
+      <workItem from="1755092164164" duration="470000" />
     </task>
     <servers />
   </component>
