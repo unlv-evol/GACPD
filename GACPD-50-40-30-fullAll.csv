@@ -1,6 +1,0 @@
-,Mainline,Fork,Pr nr,Filename,Operation,File classification,Interesting
-3,ekohl/metadata_json_deps,puppetlabs/dependency_checker,3,metadata_json_deps.gemspec,None,OTHER EXT,0
-4,ekohl/metadata_json_deps,puppetlabs/dependency_checker,3,README.md,None,NA,0
-0,ekohl/metadata_json_deps,puppetlabs/dependency_checker,10,README.md,None,NA,0
-1,ekohl/metadata_json_deps,puppetlabs/dependency_checker,10,bin/metadata-json-deps,None,OTHER EXT,0
-2,ekohl/metadata_json_deps,puppetlabs/dependency_checker,10,lib/metadata_json_deps.rb,None,NOT EXISTING,0
