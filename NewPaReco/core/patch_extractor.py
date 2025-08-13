@@ -85,6 +85,7 @@ def crawl_search_slice(repo, slice_start: datetime, slice_end: datetime,
         block = data["search"]
         if issue_count is None:
             issue_count = block.get("issueCount", None)
+
         if print_rows is False:
             print("Not outputting obtained issues - just getting issue count")
             return pr, title, ct, (issue_count if issue_count is not None else 0)
@@ -150,7 +151,6 @@ def adaptive_windowed_crawl(repo, start_dt: datetime, end_dt: datetime,
             repo, current_start, current_end, token_list, ct, bug_keyword,
             start_dt, end_dt, print_rows=False
         )
-        pr_set.clear()
         ct = ct_probe  # advance token pointer
 
         # Adapt window size based on measured density
@@ -167,13 +167,12 @@ def adaptive_windowed_crawl(repo, start_dt: datetime, end_dt: datetime,
             repo, current_start, current_end, token_list, ct, bug_keyword,
             start_dt, end_dt, print_rows=True
         )
-        pr_set.clear()
         all_prs.extend(pr_slice)
         all_titles.extend(titles_slice)
 
         # Move to next window (next day after current_end)
         current_start = current_end + timedelta(days=1)
-
+    pr_set.clear()
     return all_prs, all_titles, ct
 
 def pullrequest_patches(repo, diverge_date, least_date, token_list, ct):
