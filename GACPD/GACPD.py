@@ -1,4 +1,5 @@
 import os
+import pprint
 import sys
 import json
 import pandas as pd
@@ -19,6 +20,8 @@ import NewPaReco.core.data_extractor as dataloader
 import NewPaReco.utils.common as common
 # import Methods.commitLoader as commitloader
 import NewPaReco.utils.helpers as commitloader
+from NewPaReco.constants import constant
+from NewPaReco.utils import helpers
 # from Methods.patchExtractionFunctions import divergence_date
 from NewPaReco.utils.helpers import divergence_date
 # from Methods.patchExtractionFunctions import pr_patches
@@ -252,8 +255,8 @@ class GACPD:
         print(
             f'The divergence_date of the repository {self.repo_divergent} is {self.divergence_date} and the cut_off_date is {self.cut_off_date}.')
         print(f'The variant2 is ==>')
-        print(f'\t Ahead by {self.ahead_by} patches')
-        print(f'\t Behind by {self.behind_by} patches')
+        print(f'\t Ahead by {self.ahead_by} commits')
+        print(f'\t Behind by {self.behind_by} commits')
         print(
             f'Select an interval within the period [{self.divergence_date}, {self.cut_off_date}] to limit the patches being checked.')
 
@@ -794,19 +797,6 @@ class GACPD:
                                         self.remove_all_files('src')
                                         self.remove_all_files('cmp')
                                         self.remove_all_files('reports')
-
-                                        # if MO_total == 0 and ED_total == 0 and SP_total == 0:
-                                        #     classification = "NA"
-                                        #     outputNA += 1
-                                        # elif (SP_total > MO_total and SP_total > ED_total) or (MO_total == ED_total):
-                                        #     classification = "SP"
-                                        #     outputSP += 1
-                                        # elif MO_total > ED_total:
-                                        #     classification = "MO"
-                                        #     outputMO += 1
-                                        # elif ED_total > MO_total:
-                                        #     classification = "ED"
-                                        #     outputED += 1
 
                                         if MO_total == 0 and ED_total == 0 and SP_total == 0:
                                             classification = "NA"
@@ -1420,3 +1410,52 @@ function renderPage6_SubfolderDetails(repo, classification, pr, folderName, subf
         """)
 
         print(f"✅ JavaScript file written to: {output_path}")
+
+    def individual_pr_check(self, pr_number):
+        # # Removes old git clone (if it exists) to ensure we have latest version
+        repo_name = self.repo_divergent.split('/')[0]
+        self.remove_git_folder("Results/Repos_files"+"/"+self.repo_check_number+"/"+repo_name)
+        repo_name = self.repo_main_line.split('/')[0]
+        self.remove_git_folder(self.repo_clones + "/" + self.repo_check_number + "/" + repo_name)
+        #
+        # # clones latest version of repo to ensure we have latest version
+        file = self.repo_check_number+"/"+self.repo_divergent
+        self.create_git_folder("Results/Repos_files", file)
+
+        file = self.repo_check_number + "/" + self.repo_main_line
+        self.create_git_folder(self.repo_clones, file)
+
+        self.obtain_git_information()
+
+        try:
+            if os.path.isdir(f"Results/Repos_results/{self.repo_check_number}") is False:
+                os.makedirs(f"Results/Repos_results/{self.repo_check_number}")
+
+            # Create directory to save into
+            if os.path.isdir(f"Results/Repos_results/{self.repo_check_number}/{pr_number}") is False:
+                os.makedirs(f"Results/Repos_results/{self.repo_check_number}/{pr_number}")
+            else:
+                shutil.rmtree(f"Results/Repos_results/{self.repo_check_number}/{pr_number}")
+                os.makedirs(f"Results/Repos_results/{self.repo_check_number}/{pr_number}")
+        except Exception as e:
+            pass
+
+        # Obtains specific PR
+        if self.ct == len(self.token_list):
+            self.ct = 0
+
+        pr_request = f'{constant.GITHUB_API_BASE_URL}{self.repo_main_line}/pulls/{pr_number}'
+        pr = helpers.api_request(pr_request, self.token_list[self.ct])
+        self.ct += 1
+
+        mainCheck = self.repo_clones + self.repo_check_number + "/" + self.repo_main_line
+        currentAddedFiles, current_renames = self.get_added_git_files(mainCheck,
+                                                                      str(pr['base']['sha']),
+                                                                      str(pr_number))
+        self.prs = [pr_number]
+        destination_sha, self.ct = dataloader.get_variant_sha(self.repo_divergent, self.cut_off_date, self.token_list,
+                                                                self.ct)
+        self.ct, self.repo_data, req, runtime = dataloader.fetch_pullrequest_data(self.repo_main_line, self.repo_divergent, self.prs,
+                                                                       destination_sha, self.token_list, self.ct)
+
+        self.classify()

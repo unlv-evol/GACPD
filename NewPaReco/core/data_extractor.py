@@ -78,14 +78,14 @@ def fetch_pullrequest_data(mainline, variant, pullrequests, variant_sha, token_l
                     if ct == token_length:
                         ct = 0
                         
-                        if helpers.find_file(file_name, variant, token_list[ct], variant_sha):
-                            sub = {}
-                            sub['status'] = file['status']
-                            sub['additions'] = file['additions']
-                            sub['deletions'] = file['deletions']
-                            sub['changes'] = file['changes']
-                            sub['patch'] = file['patch']
-                            commits_data[file_name].append(sub)
+                    if helpers.find_file(file_name, variant, token_list[ct], variant_sha):
+                        sub = {}
+                        sub['status'] = file['status']
+                        sub['additions'] = file['additions']
+                        sub['deletions'] = file['deletions']
+                        sub['changes'] = file['changes']
+                        sub['patch'] = file['patch']
+                        commits_data[file_name].append(sub)
                         # else:
                         # # print(f"File missing in target_head.......: {file_name}, Status: {file['status']}")
 
