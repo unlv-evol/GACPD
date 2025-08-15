@@ -248,6 +248,11 @@ class GACPD:
         for pr in prs:
             self.prs.append(str(pr))
 
+    def get_single_dates(self):
+        self.fork_date, self.divergence_date, self.cut_off_date, self.ahead_by, self.behind_by, self.ct = divergence_date(
+            self.repo_main_line, self.repo_divergent, self.token_list, self.token_count, self.cut_off_date, self.divergence_date)
+        self.modern_day = self.cut_off_date
+
     def get_dates(self):
         self.fork_date, self.divergence_date, self.cut_off_date, self.ahead_by, self.behind_by, self.ct = divergence_date(
             self.repo_main_line, self.repo_divergent, self.token_list, self.token_count, self.cut_off_date, self.divergence_date)
@@ -1411,7 +1416,7 @@ function renderPage6_SubfolderDetails(repo, classification, pr, folderName, subf
 
         print(f"✅ JavaScript file written to: {output_path}")
 
-    def individual_pr_check(self, pr_number):
+    def get_git_information(self):
         # # Removes old git clone (if it exists) to ensure we have latest version
         repo_name = self.repo_divergent.split('/')[0]
         self.remove_git_folder("Results/Repos_files"+"/"+self.repo_check_number+"/"+repo_name)
@@ -1427,6 +1432,7 @@ function renderPage6_SubfolderDetails(repo, classification, pr, folderName, subf
 
         self.obtain_git_information()
 
+    def individual_pr_check(self, pr_number):
         try:
             if os.path.isdir(f"Results/Repos_results/{self.repo_check_number}") is False:
                 os.makedirs(f"Results/Repos_results/{self.repo_check_number}")
